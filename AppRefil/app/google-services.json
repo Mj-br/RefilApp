@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "128121858942",
+    "firebase_url": "https://refil-v1-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "refil-v1",
+    "storage_bucket": "refil-v1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128121858942:android:abd8e9ab29bf85d44de12f",
+        "android_client_info": {
+          "package_name": "es.refil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128121858942-or7evmfoh25q4mt6gghsdsu5nis6j2mj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdsaQesJq-BNIqXCCwBx4MejSOthDFMaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128121858942-97nssn5bsumesifh922val51mfoqjia2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128121858942:android:a645029f3f2e3c214de12f",
+        "android_client_info": {
+          "package_name": "es.refil.reciclermachine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128121858942-or7evmfoh25q4mt6gghsdsu5nis6j2mj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdsaQesJq-BNIqXCCwBx4MejSOthDFMaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128121858942-97nssn5bsumesifh922val51mfoqjia2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
