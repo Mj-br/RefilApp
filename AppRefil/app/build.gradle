@@ -67,6 +67,9 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
 
+    //Constraint Layout
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+
     //LiveData, Retrofit
     implementation 'androidx.compose.runtime:runtime-livedata:1.4.3'
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
