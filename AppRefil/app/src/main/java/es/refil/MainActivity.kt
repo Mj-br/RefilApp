@@ -9,8 +9,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
-import es.refil.mainMarket.MainMarketScreen
-import es.refil.ui.mainMarket.MainMarketViewModel
+import es.refil.core.ui.ScaffoldMain
+import es.refil.presentation.mainMarket.MainMarketViewModel
 import es.refil.ui.theme.AppRefilTheme
 
 @AndroidEntryPoint
@@ -22,13 +22,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             AppRefilTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MainMarketScreen(/* TODO: Descomentar cuando tengamos la pantalla ya hecha  -- mainMarketViewModel*/)
+
+                    ScaffoldMain()
+
+
+
                 }
             }
         }

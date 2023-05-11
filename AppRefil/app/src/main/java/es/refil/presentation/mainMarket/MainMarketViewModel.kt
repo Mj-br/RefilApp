@@ -1,4 +1,4 @@
-package es.refil.ui.mainMarket
+package es.refil.presentation.mainMarket
 
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject

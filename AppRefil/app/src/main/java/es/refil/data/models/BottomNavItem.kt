@@ -1,4 +1,4 @@
-package es.refil.data.model
+package es.refil.data.models
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

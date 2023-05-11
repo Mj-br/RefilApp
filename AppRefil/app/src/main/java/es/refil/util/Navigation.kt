@@ -13,7 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import es.refil.data.model.BottomNavItem
+import es.refil.data.models.BottomNavItem
 import es.refil.favorites.ui.FavoriteScreen
 import es.refil.login.ui.LoginScreen
 import es.refil.mainMarket.MainMarketScreen
@@ -72,18 +72,24 @@ fun BottomNavigationBar(
                             BadgedBox(badge = {
                                 Text(text = item.badgeCount.toString())
                             }) {
-                                Icon(imageVector = item.icon,
-                                    contentDescription = item.name)
+                                Icon(
+                                    imageVector = item.icon,
+                                    contentDescription = item.name
+                                )
 
                             }
                         } else {
-                            Icon(imageVector = item.icon,
-                                contentDescription = item.name)
+                            Icon(
+                                imageVector = item.icon,
+                                contentDescription = item.name
+                            )
                         }
-                        if (selected){
-                            Text(text = item.name,
-                            textAlign = TextAlign.Center,
-                            fontSize = 10.sp)
+                        if (selected) {
+                            Text(
+                                text = item.name,
+                                textAlign = TextAlign.Center,
+                                fontSize = 10.sp
+                            )
 
                         }
 
