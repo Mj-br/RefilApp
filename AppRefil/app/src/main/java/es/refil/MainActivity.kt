@@ -7,30 +7,22 @@ import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOut
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dagger.hilt.android.AndroidEntryPoint
-import es.refil.core.ui.ScaffoldMain
-import es.refil.login.ui.LoginScreen
-import es.refil.mainMarket.MainMarketScreen
+import es.refil.presentation.login.LoginScreen
 import es.refil.navigation.Destinations
+import es.refil.presentation.login.LoginViewModel
 import es.refil.presentation.mainMarket.MainMarketViewModel
 import es.refil.presentation.profile.ProfileScreen
+import es.refil.presentation.registration.RegisterViewModel
 import es.refil.presentation.registration.RegistrationScreen
 import es.refil.ui.theme.AppRefilTheme
 
@@ -53,7 +45,7 @@ class MainActivity : ComponentActivity() {
                     AnimatedNavHost(
                         navController = navController,
                         startDestination = Destinations.Login.route
-                    ){
+                    ) {
                         addLogin(navController)
                         addRegister(navController)
                         addHome()
@@ -69,7 +61,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.addLogin(
     navController: NavController
-){
+) {
     composable(
         route = Destinations.Login.route,
         enterTransition = { _, _ ->
@@ -98,8 +90,34 @@ fun NavGraphBuilder.addLogin(
             )
         }
 
-    ){
-        LoginScreen()
+    ) {
+        val loginViewModel: LoginViewModel = hiltViewModel()
+
+        //We pass all we need to the LoginScreen, before this we create parameters to the LoginScreen
+        if (loginViewModel.state.value.successLogin) {
+            LaunchedEffect(key1 = Unit) {
+                navController.navigate(Destinations.Profile.route) {
+
+                    //We do the pop up in order to go back NOT to the Login Screen but going out the app
+                    popUpTo(Destinations.Login.route) {
+                        inclusive = true
+                    }
+                }
+            }
+
+
+        } else {
+            LoginScreen(
+                state = loginViewModel.state.value,
+                onLogin = loginViewModel::login,
+                onNavigateToRegister = {
+                    navController.navigate(Destinations.Register.route)
+                },
+                onDismissDialog = {
+                    loginViewModel.hideErrorDialog()
+                }
+            )
+        }
 
     }
 
@@ -110,7 +128,9 @@ fun NavGraphBuilder.addLogin(
 fun NavGraphBuilder.addRegister(
     navController: NavController
 ) {
+
     composable(
+
         route = Destinations.Register.route,
         enterTransition = { _, _ ->
             slideInHorizontally(
@@ -139,7 +159,16 @@ fun NavGraphBuilder.addRegister(
         }
 
     ) {
-        RegistrationScreen()
+        val registerViewModel: RegisterViewModel = hiltViewModel()
+        //We pass all we need to the RegisterScreen, before this we create parameters to the RegisterScreen
+        RegistrationScreen(
+            state = registerViewModel.state.value,
+            onRegister = registerViewModel::register,
+            onBack = {
+                navController.popBackStack()
+            },
+            onDismissDialog = registerViewModel::hideErrorDialog
+        )
 
     }
 }
@@ -148,7 +177,7 @@ fun NavGraphBuilder.addRegister(
 fun NavGraphBuilder.addHome(
 ) {
     composable(
-        route = Destinations.Home.route,
+        route = Destinations.Profile.route,
 
         ) {
         ProfileScreen()

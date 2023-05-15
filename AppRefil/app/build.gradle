@@ -95,21 +95,21 @@ dependencies {
 
     //Dagger Hilt
     //Added from https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/build.gradle
-    /*def hilt_lifecycle_viewModel = "1.0.0-alpha03"
-    def hilt_navigation = "1.0.0-alpha03"*/
+    def hilt_lifecycle_viewModel = "1.0.0-alpha03"
+    def hilt_navigation = "1.0.0-alpha03"
 
     implementation "com.google.dagger:hilt-android:2.45"
     kapt "com.google.dagger:hilt-android-compiler:2.45"
 
-  /*  //Added from https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/build.gradle
+    //Added from https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/build.gradle
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_viewModel"
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_navigation"
 
     //Added from https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/build.gradle
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"*/
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
 
     //Added from https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/build.gradle
     // Kotlin Coroutines

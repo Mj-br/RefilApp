@@ -8,5 +8,5 @@ sealed class Destinations(
 ){
     object Login: Destinations("login", emptyList())
     object Register: Destinations("register", emptyList())
-    object Home: Destinations("marketPlace", emptyList())
+    object Profile: Destinations("profile", emptyList())
 }

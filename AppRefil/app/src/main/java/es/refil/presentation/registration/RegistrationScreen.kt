@@ -32,6 +32,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import es.refil.presentation.components.EventDialog
 import es.refil.presentation.components.RoundedButton
 import es.refil.presentation.components.SocialMediaButton
 import es.refil.ui.theme.FACEBOOKCOLOR
@@ -39,7 +40,14 @@ import es.refil.ui.theme.GMAILCOLOR
 import es.refil.ui.theme.GOOGLECOLOR
 
 @Composable
-fun RegistrationScreen() {
+fun RegistrationScreen(
+    //We pass parameters to the registration screen in order to pass the ViewModel in the main activity
+    state: RegisterStateData,
+    onRegister: (String, String, String) -> Unit,
+    onBack: () -> Unit,
+    onDismissDialog: () -> Unit
+
+) {
 
     val emailValue = rememberSaveable { mutableStateOf("") }
     val passwordValue = rememberSaveable { mutableStateOf("") }
@@ -64,7 +72,7 @@ fun RegistrationScreen() {
             ) {
                 IconButton(
                     onClick = {
-                        //TODO:("Back BUTTON")
+                        onBack()
                     }
                 ) {
                     Icon(
@@ -138,7 +146,11 @@ fun RegistrationScreen() {
                     keyboardActions = KeyboardActions(
                         onDone = {
                             focusManager.clearFocus()
-                            //TODO:("REGISTRATION"
+                            onRegister(
+                                emailValue.value,
+                                passwordValue.value,
+                                confirmPasswordValue.value
+                            )
                         }
                     ),
                     imeAction = ImeAction.Done,
@@ -162,9 +174,13 @@ fun RegistrationScreen() {
 
                 RoundedButton(
                     text = "Sign up",
-                    displayProgressBar = false,
+                    displayProgressBar = state.displayProgressBar,
                     onClick = {
-                        //TODO:("REGISTER")
+                        onRegister(
+                            emailValue.value,
+                            passwordValue.value,
+                            confirmPasswordValue.value
+                        )
                     }
                 )
 
@@ -181,7 +197,7 @@ fun RegistrationScreen() {
                         }
                     },
                     onClick = {
-                        //TODO:("BACK")
+                        onBack()
                     }
                 )
             }
@@ -247,6 +263,10 @@ fun RegistrationScreen() {
 
 
         }
+    }
+
+    if (state.errorMessage != null){
+        EventDialog(errorMessage = state.errorMessage, onDismiss = onDismissDialog)
     }
 
 }
