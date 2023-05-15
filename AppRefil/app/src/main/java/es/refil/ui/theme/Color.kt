@@ -31,6 +31,7 @@ val RED800 = Color(0xffba000d)  //Error
  */
 val FACEBOOKCOLOR = Color(0xFF4267B2)
 val GMAILCOLOR = Color(0xFFDB4437)
+val GOOGLECOLOR = Color(0xFF4285F4)
 
 
 /* Default colors
