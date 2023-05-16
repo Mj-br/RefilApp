@@ -8,6 +8,7 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.layout.BoxWithConstraints
 import com.google.accompanist.navigation.animation.*
 import dagger.hilt.android.AndroidEntryPoint
+import es.refil.navigation.AppNavHost
 import es.refil.navigation.Destinations
 import es.refil.navigation.RefillNavigation.addLogin
 import es.refil.navigation.RefillNavigation.addProfile
@@ -33,18 +34,8 @@ class MainActivity : ComponentActivity() {
                  val navController = rememberAnimatedNavController()
 
                 BoxWithConstraints {
-                    AnimatedNavHost(
-                        navController = navController,
-                        startDestination = Destinations.Login.route
-                    ) {
 
-                        //TODO: Need to add a bottom bar with Scaffold
-
-                        addLogin(navController)
-                        addRegister(navController)
-                        addProfile()
-
-                    }
+                    AppNavHost()
 
                 }
             }
