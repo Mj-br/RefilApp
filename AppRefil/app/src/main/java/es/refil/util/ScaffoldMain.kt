@@ -15,9 +15,10 @@ import es.refil.data.models.BottomNavItem
 
 @Composable
 fun ScaffoldMain() {
-    val navControllerState = rememberNavController()
+    val navController = rememberNavController()
     //TODO: Tengo que ver el video de Aris donde poner el Scaffold o simplemente ir con Phillip y meterlo directamente.
-    Scaffold(
+
+        Scaffold(
         /*TODO: Pasamos el toolbar
         TopAppBar() {
 
@@ -46,19 +47,16 @@ fun ScaffoldMain() {
                     ),
 
                     ),
-                navController = navControllerState,
+                navController = navController,
                 onItemClick = {
-                    navControllerState.navigate(it.route) //If it refers to this item (screen), it will navigate to it
+                    navController.navigate(it.route) //If it refers to this item (screen), it will navigate to it
                 }
             )
         }
 
     ) {
         Box(modifier = Modifier.padding(it)) {
-            Navigation(navController = navControllerState)
-
-
-
+            Navigation(navController = navController)
         }
     }
 

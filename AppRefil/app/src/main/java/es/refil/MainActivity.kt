@@ -4,35 +4,47 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.ui.Modifier
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.runtime.LaunchedEffect
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.*
+import com.google.accompanist.navigation.animation.*
 import dagger.hilt.android.AndroidEntryPoint
-import es.refil.core.ui.ScaffoldMain
+import es.refil.presentation.login.LoginScreen
+import es.refil.navigation.Destinations
+import es.refil.presentation.login.LoginViewModel
 import es.refil.presentation.mainMarket.MainMarketViewModel
+import es.refil.presentation.profile.ProfileScreen
+import es.refil.presentation.registration.RegisterViewModel
+import es.refil.presentation.registration.RegistrationScreen
 import es.refil.ui.theme.AppRefilTheme
 
+@ExperimentalAnimationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     //We create a viewModel to be able to access the MainMarketScreen
     private val mainMarketViewModel: MainMarketViewModel by viewModels()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             AppRefilTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
+                 val navController = rememberAnimatedNavController()
 
-                    ScaffoldMain()
+                BoxWithConstraints {
+                    AnimatedNavHost(
+                        navController = navController,
+                        startDestination = Destinations.Login.route
+                    ) {
+                        addLogin(navController)
+                        addRegister(navController)
+                        addProfile()
 
-
+                    }
 
                 }
             }
@@ -40,17 +52,148 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalAnimationApi
+fun NavGraphBuilder.addLogin(
+    navController: NavController
+) {
+    composable(
+        route = Destinations.Login.route,
+        enterTransition = {
+                when (initialState.destination.route) {
+                    Destinations.Register.route ->
+                        slideInHorizontally(
+                            initialOffsetX = { 300 },
+                            animationSpec = tween(300)
+                        ) + fadeIn(animationSpec = tween(300))
+                    else -> null
+                }
+            },
+            exitTransition = {
+                when (targetState.destination.route) {
+                    Destinations.Register.route ->
+                        slideOutHorizontally(
+                            targetOffsetX = { -300 },
+                            animationSpec = tween(300)
+                        ) + fadeOut(animationSpec = tween(300))
+                    else -> null
+                }
+            },
+            popEnterTransition = {
+                when (initialState.destination.route) {
+                    Destinations.Register.route ->
+                        slideInHorizontally(
+                            initialOffsetX = { -300 },
+                            animationSpec = tween(300)
+                        ) + fadeIn(animationSpec = tween(300))
+                    else -> null
+            }
+        }
 
-/* Default Composable
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+    ) {
+        val loginViewModel: LoginViewModel = hiltViewModel()
+        val email = loginViewModel.state.value.email
+        val password = loginViewModel.state.value.password
+
+        //We pass all we need to the LoginScreen, before this we create parameters to the LoginScreen
+        if (loginViewModel.state.value.successLogin) {
+            LaunchedEffect(key1 = Unit) {
+                navController.navigate(
+                    //We pass the email and password to the ProfileScreen TODO: FIRESTORE, WE NEED TO PASS THIS TO THE FIRESTORE
+                    Destinations.Profile.route + "/$email" +"/$password"
+                ) {
+
+                    //We do the pop up in order to go back NOT to the Login Screen but going out the app
+                    popUpTo(Destinations.Login.route) {
+                        inclusive = true
+                    }
+                }
+            }
+
+
+        } else {
+            LoginScreen(
+                state = loginViewModel.state.value,
+                onLogin = loginViewModel::login,
+                onNavigateToRegister = {
+                    navController.navigate(Destinations.Register.route)
+                },
+                onDismissDialog = {
+                    loginViewModel.hideErrorDialog()
+                }
+            )
+        }
+
+    }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    AppRefilTheme {
-        Greeting("Android")
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.addRegister(
+    navController: NavController
+) {
+
+    composable(
+
+        route = Destinations.Register.route,
+        enterTransition = {
+            when (initialState.destination.route) {
+                Destinations.Login.route ->
+                    slideInHorizontally(
+                        initialOffsetX = { 300 },
+                        animationSpec = tween(300)
+                    ) + fadeIn(animationSpec = tween(300))
+                else -> null
+            }
+        },
+        exitTransition = {
+            when (targetState.destination.route) {
+                Destinations.Login.route ->
+                    slideOutHorizontally(
+                        targetOffsetX = { -300 },
+                        animationSpec = tween(300)
+                    ) + fadeOut(animationSpec = tween(300))
+                else -> null
+            }
+        },
+        popExitTransition = {
+            when (targetState.destination.route) {
+                Destinations.Login.route ->
+                    slideOutHorizontally(
+                        targetOffsetX = { 300 },
+                        animationSpec = tween(300)
+                    ) + fadeOut(animationSpec = tween(300))
+                else -> null
+            }
+        }
+
+    ) {
+        val registerViewModel: RegisterViewModel = hiltViewModel()
+        //We pass all we need to the RegisterScreen, before this we create parameters to the RegisterScreen
+        RegistrationScreen(
+            state = registerViewModel.state.value,
+            onRegister = registerViewModel::register,
+            onBack = {
+                navController.popBackStack()
+            },
+            onDismissDialog = registerViewModel::hideErrorDialog
+        )
+
     }
-}*/
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.addProfile(
+) {
+    composable(
+        //We receive the email and password from the LoginScreen
+        route = Destinations.Profile.route + "/{email}" + "/{password}",
+        arguments = Destinations.Profile.arguments
+
+        ) { backStackEntry ->
+            val email = backStackEntry.arguments?.getString("email") ?: ""
+            val password = backStackEntry.arguments?.getString("password") ?: ""
+
+        ProfileScreen(email, password)
+
+    }
+}
+

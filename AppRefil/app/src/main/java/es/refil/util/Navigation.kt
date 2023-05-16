@@ -9,26 +9,40 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import es.refil.data.models.BottomNavItem
 import es.refil.favorites.ui.FavoriteScreen
-import es.refil.login.ui.LoginScreen
+import es.refil.presentation.login.LoginScreen
 import es.refil.mainMarket.MainMarketScreen
+import es.refil.navigation.Destinations
+import es.refil.presentation.login.LoginViewModel
 
 
 //Creamos nuestro navegador para todas las pantallas
 @Composable
 fun Navigation(navController: NavHostController) {
+    val loginViewModel: LoginViewModel = hiltViewModel()
+
     NavHost(navController = navController, startDestination = "MainMarketScreen") {
         composable("MainMarketScreen") {
             MainMarketScreen()
         }
 
         composable("LoginScreen") {
-            LoginScreen()
+            LoginScreen(
+                state = loginViewModel.state.value,
+                onLogin = loginViewModel::login,
+                onNavigateToRegister = {
+                    navController.navigate(Destinations.Register.route)
+                },
+                onDismissDialog = {
+                    loginViewModel.hideErrorDialog()
+                }
+            )
         }
 
         composable("FavoriteScreen") {
