@@ -10,13 +10,12 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.google.android.material.bottomappbar.BottomAppBar
 import es.refil.data.models.BottomNavItem
 
 
 @Composable
 fun ScaffoldMain() {
-    val navControllerState = rememberNavController()
+    val navController = rememberNavController()
     //TODO: Tengo que ver el video de Aris donde poner el Scaffold o simplemente ir con Phillip y meterlo directamente.
 
         Scaffold(
@@ -48,16 +47,16 @@ fun ScaffoldMain() {
                     ),
 
                     ),
-                navController = navControllerState,
+                navController = navController,
                 onItemClick = {
-                    navControllerState.navigate(it.route) //If it refers to this item (screen), it will navigate to it
+                    navController.navigate(it.route) //If it refers to this item (screen), it will navigate to it
                 }
             )
         }
 
     ) {
         Box(modifier = Modifier.padding(it)) {
-            Navigation(navController = navControllerState)
+            Navigation(navController = navController)
         }
     }
 

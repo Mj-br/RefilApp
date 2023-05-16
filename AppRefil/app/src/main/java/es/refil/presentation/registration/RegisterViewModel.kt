@@ -9,9 +9,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import es.refil.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class RegisterViewModel: ViewModel() {
+class RegisterViewModel @Inject constructor() : ViewModel() {
 
     val state: MutableState<RegisterStateData> = mutableStateOf(RegisterStateData())
 

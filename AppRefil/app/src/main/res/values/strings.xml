@@ -3,10 +3,10 @@
 
     <!-- https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/src/main/res/values/strings.xml -->
     <string name="error_input_empty">The fields must not be empty</string>
-    <string name="error_not_a_valid_email">Please enter a valid E-Mail</string>
+    <string name="error_not_a_valid_email">Please enter a valid email</string>
     <string name="error_not_a_valid_phone_number">Please enter a valid phone number</string>
     <string name="error_incorrectly_repeated_password">The passwords do not match</string>
-    <string name="error_invalid_credentials">The E-Mail or password is incorrect</string>
+    <string name="error_invalid_credentials">Email or password incorrect</string>
     <string name="success_registration">Successfully registered new user</string>
     <string name="success_login">Successfully logged in</string>
     <string name="error_unknown">An unknown error occurred</string>

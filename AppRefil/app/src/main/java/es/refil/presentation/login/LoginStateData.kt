@@ -2,6 +2,7 @@ package es.refil.presentation.login
 
 import androidx.annotation.StringRes
 
+
 data class LoginStateData(
     val email: String = "",
     val password: String = "",

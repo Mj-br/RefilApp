@@ -4,18 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.*
+import com.google.accompanist.navigation.animation.*
 import dagger.hilt.android.AndroidEntryPoint
 import es.refil.presentation.login.LoginScreen
 import es.refil.navigation.Destinations
@@ -26,7 +21,7 @@ import es.refil.presentation.registration.RegisterViewModel
 import es.refil.presentation.registration.RegistrationScreen
 import es.refil.ui.theme.AppRefilTheme
 
-@OptIn(ExperimentalAnimationApi::class)
+@ExperimentalAnimationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -37,10 +32,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             AppRefilTheme {
-                val navController = rememberAnimatedNavController()
-                // A surface container using the 'background' color from the theme
+                 val navController = rememberAnimatedNavController()
+
                 BoxWithConstraints {
                     AnimatedNavHost(
                         navController = navController,
@@ -58,13 +52,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
+@ExperimentalAnimationApi
 fun NavGraphBuilder.addLogin(
     navController: NavController
 ) {
     composable(
         route = Destinations.Login.route,
-        enterTransition = { _, _ ->
+        /*enterTransition = { _, _ ->
             slideInHorizontally(
                 initialOffsetX = { 1000 },
                 animationSpec = tween(500)
@@ -88,7 +82,7 @@ fun NavGraphBuilder.addLogin(
                 targetOffsetX = { 1000 },
                 animationSpec = tween(500)
             )
-        }
+        }*/
 
     ) {
         val loginViewModel: LoginViewModel = hiltViewModel()
@@ -132,7 +126,7 @@ fun NavGraphBuilder.addRegister(
     composable(
 
         route = Destinations.Register.route,
-        enterTransition = { _, _ ->
+        /*enterTransition = { _, _ ->
             slideInHorizontally(
                 initialOffsetX = { 1000 },
                 animationSpec = tween(500)
@@ -156,7 +150,7 @@ fun NavGraphBuilder.addRegister(
                 targetOffsetX = { 1000 },
                 animationSpec = tween(500)
             )
-        }
+        }*/
 
     ) {
         val registerViewModel: RegisterViewModel = hiltViewModel()

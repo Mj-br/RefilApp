@@ -93,16 +93,21 @@ dependencies {
     //Navigation
     implementation "androidx.navigation:navigation-compose:2.5.3"
 
+    //Added from https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/build.gradle
+    // Accompanist
+    //He cambiado esta dependencia de la 0.16.0 a la 0.31.2-alpha
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.31.2-alpha")
+
     //Dagger Hilt
     //Added from https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/build.gradle
-    def hilt_lifecycle_viewModel = "1.0.0-alpha03"
-    def hilt_navigation = "1.0.0-alpha03"
+    //def hilt_lifecycle_viewModel = "1.0.0-alpha03"
+    def hilt_navigation = "1.1.0-alpha01"
 
     implementation "com.google.dagger:hilt-android:2.45"
     kapt "com.google.dagger:hilt-android-compiler:2.45"
 
     //Added from https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/build.gradle
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_viewModel"
+    //implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_viewModel"
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_navigation"
 
     //Added from https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/build.gradle
@@ -116,9 +121,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
-    //Added from https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/build.gradle
-    // Accompanist
-    implementation "com.google.accompanist:accompanist-navigation-animation:0.16.0"
+
 
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:31.2.3')
