@@ -58,31 +58,36 @@ fun NavGraphBuilder.addLogin(
 ) {
     composable(
         route = Destinations.Login.route,
-        /*enterTransition = { _, _ ->
-            slideInHorizontally(
-                initialOffsetX = { 1000 },
-                animationSpec = tween(500)
-            )
-
-        },
-        exitTransition = { _, _ ->
-            slideOutHorizontally(
-                targetOffsetX = { -1000 },
-                animationSpec = tween(500)
-            )
-        },
-        popEnterTransition = { _, _ ->
-            slideInHorizontally(
-                initialOffsetX = { -1000 },
-                animationSpec = tween(500)
-            )
-        },
-        popExitTransition = { _, _ ->
-            slideOutHorizontally(
-                targetOffsetX = { 1000 },
-                animationSpec = tween(500)
-            )
-        }*/
+        enterTransition = {
+                when (initialState.destination.route) {
+                    Destinations.Register.route ->
+                        slideInHorizontally(
+                            initialOffsetX = { 300 },
+                            animationSpec = tween(300)
+                        ) + fadeIn(animationSpec = tween(300))
+                    else -> null
+                }
+            },
+            exitTransition = {
+                when (targetState.destination.route) {
+                    Destinations.Register.route ->
+                        slideOutHorizontally(
+                            targetOffsetX = { -300 },
+                            animationSpec = tween(300)
+                        ) + fadeOut(animationSpec = tween(300))
+                    else -> null
+                }
+            },
+            popEnterTransition = {
+                when (initialState.destination.route) {
+                    Destinations.Register.route ->
+                        slideInHorizontally(
+                            initialOffsetX = { -300 },
+                            animationSpec = tween(300)
+                        ) + fadeIn(animationSpec = tween(300))
+                    else -> null
+            }
+        }
 
     ) {
         val loginViewModel: LoginViewModel = hiltViewModel()
@@ -126,31 +131,36 @@ fun NavGraphBuilder.addRegister(
     composable(
 
         route = Destinations.Register.route,
-        /*enterTransition = { _, _ ->
-            slideInHorizontally(
-                initialOffsetX = { 1000 },
-                animationSpec = tween(500)
-            )
-
+        enterTransition = {
+            when (initialState.destination.route) {
+                Destinations.Login.route ->
+                    slideInHorizontally(
+                        initialOffsetX = { 300 },
+                        animationSpec = tween(300)
+                    ) + fadeIn(animationSpec = tween(300))
+                else -> null
+            }
         },
-        exitTransition = { _, _ ->
-            slideOutHorizontally(
-                targetOffsetX = { -1000 },
-                animationSpec = tween(500)
-            )
+        exitTransition = {
+            when (targetState.destination.route) {
+                Destinations.Login.route ->
+                    slideOutHorizontally(
+                        targetOffsetX = { -300 },
+                        animationSpec = tween(300)
+                    ) + fadeOut(animationSpec = tween(300))
+                else -> null
+            }
         },
-        popEnterTransition = { _, _ ->
-            slideInHorizontally(
-                initialOffsetX = { -1000 },
-                animationSpec = tween(500)
-            )
-        },
-        popExitTransition = { _, _ ->
-            slideOutHorizontally(
-                targetOffsetX = { 1000 },
-                animationSpec = tween(500)
-            )
-        }*/
+        popExitTransition = {
+            when (targetState.destination.route) {
+                Destinations.Login.route ->
+                    slideOutHorizontally(
+                        targetOffsetX = { 300 },
+                        animationSpec = tween(300)
+                    ) + fadeOut(animationSpec = tween(300))
+                else -> null
+            }
+        }
 
     ) {
         val registerViewModel: RegisterViewModel = hiltViewModel()
@@ -179,17 +189,3 @@ fun NavGraphBuilder.addHome(
     }
 }
 
-
-/* Default Composable
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    AppRefilTheme {
-        Greeting("Android")
-    }
-}*/
