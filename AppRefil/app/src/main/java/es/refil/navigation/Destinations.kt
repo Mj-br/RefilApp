@@ -18,4 +18,9 @@ sealed class Destinations(
 
         )
     )
+
+    object QrScreen: Destinations("qrScreen", emptyList())
+    object MainMarket: Destinations("mainMarket", emptyList())
+    object DetailProduct: Destinations("detailMarket", emptyList())
+
 }

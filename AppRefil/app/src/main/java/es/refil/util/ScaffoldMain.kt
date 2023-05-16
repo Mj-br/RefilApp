@@ -1,5 +1,6 @@
 package es.refil.core.ui
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -10,12 +11,14 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import es.refil.data.models.BottomNavItem
 
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ScaffoldMain() {
-    val navController = rememberNavController()
+    val navController = rememberAnimatedNavController()
     //TODO: Tengo que ver el video de Aris donde poner el Scaffold o simplemente ir con Phillip y meterlo directamente.
 
         Scaffold(
@@ -34,7 +37,7 @@ fun ScaffoldMain() {
                         badgeCount = 0
                     ),
                     BottomNavItem(
-                        name = "Profile",
+                        name = "Login",
                         route = "LoginScreen",
                         icon = Icons.Default.Person,
                         badgeCount = 0

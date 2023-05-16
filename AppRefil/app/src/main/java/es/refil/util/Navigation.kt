@@ -48,6 +48,8 @@ fun Navigation(navController: NavHostController) {
         composable("FavoriteScreen") {
             FavoriteScreen()
         }
+
+
     }
 }
 
