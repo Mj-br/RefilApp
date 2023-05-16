@@ -10,7 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    email: String,
+    password: String
+) {
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -21,6 +24,8 @@ fun ProfileScreen() {
             "Profile Screen",
             style = MaterialTheme.typography.h3
         )
+        
+        Text(text = "Email: $email, Password: $password")
 
     }
 

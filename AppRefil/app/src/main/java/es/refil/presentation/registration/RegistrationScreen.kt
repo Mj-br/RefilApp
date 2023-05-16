@@ -100,7 +100,7 @@ fun RegistrationScreen(
             ) {
                 TransparentTextField(
                     textFieldValue = emailValue,
-                    textLabel = "Name",
+                    textLabel = "Email",
                     keyboardType = KeyboardType.Email,
                     keyboardActions = KeyboardActions(
                         onNext = {

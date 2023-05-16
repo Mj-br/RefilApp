@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         addLogin(navController)
                         addRegister(navController)
-                        addHome()
+                        addProfile()
 
                     }
 
@@ -91,11 +91,16 @@ fun NavGraphBuilder.addLogin(
 
     ) {
         val loginViewModel: LoginViewModel = hiltViewModel()
+        val email = loginViewModel.state.value.email
+        val password = loginViewModel.state.value.password
 
         //We pass all we need to the LoginScreen, before this we create parameters to the LoginScreen
         if (loginViewModel.state.value.successLogin) {
             LaunchedEffect(key1 = Unit) {
-                navController.navigate(Destinations.Profile.route) {
+                navController.navigate(
+                    //We pass the email and password to the ProfileScreen TODO: FIRESTORE, WE NEED TO PASS THIS TO THE FIRESTORE
+                    Destinations.Profile.route + "/$email" +"/$password"
+                ) {
 
                     //We do the pop up in order to go back NOT to the Login Screen but going out the app
                     popUpTo(Destinations.Login.route) {
@@ -119,8 +124,6 @@ fun NavGraphBuilder.addLogin(
         }
 
     }
-
-
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -178,13 +181,18 @@ fun NavGraphBuilder.addRegister(
 }
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.addHome(
+fun NavGraphBuilder.addProfile(
 ) {
     composable(
-        route = Destinations.Profile.route,
+        //We receive the email and password from the LoginScreen
+        route = Destinations.Profile.route + "/{email}" + "/{password}",
+        arguments = Destinations.Profile.arguments
 
-        ) {
-        ProfileScreen()
+        ) { backStackEntry ->
+            val email = backStackEntry.arguments?.getString("email") ?: ""
+            val password = backStackEntry.arguments?.getString("password") ?: ""
+
+        ProfileScreen(email, password)
 
     }
 }
