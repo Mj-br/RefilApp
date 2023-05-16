@@ -5,8 +5,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import es.refil.data.AuthRepository
-import es.refil.data.AuthRepositoryImpl
+import es.refil.data.utils.auth.AuthRepository
+import es.refil.data.utils.auth.AuthRepositoryImpl
+import javax.inject.Singleton
 
 
 @InstallIn(SingletonComponent::class)
@@ -14,9 +15,10 @@ import es.refil.data.AuthRepositoryImpl
 class AppModule {
 
     @Provides
+    @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
-
     @Provides
+    @Singleton
     fun provideAuthRepository(impl: AuthRepositoryImpl): AuthRepository = impl
 
 }

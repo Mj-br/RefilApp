@@ -1,6 +1,7 @@
-package es.refil.data
+package es.refil.data.utils.auth
 
 import com.google.firebase.auth.FirebaseUser
+import es.refil.data.Resource
 
 interface AuthRepository {
     val currentUser: FirebaseUser?

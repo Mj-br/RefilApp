@@ -35,13 +35,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import es.refil.R
+import es.refil.presentation.auth.AuthViewModel
 import es.refil.presentation.components.EventDialog
 import es.refil.presentation.components.RoundedButton
 import es.refil.presentation.components.TransparentTextField
 
 @Composable
 fun LoginScreen(
+    viewModel: AuthViewModel = hiltViewModel(),
     state: LoginStateData,
     onLogin: (String, String) -> Unit,
     onNavigateToRegister: () -> Unit,

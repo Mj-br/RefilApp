@@ -1,9 +1,9 @@
-package es.refil.data
+package es.refil.data.utils.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import es.refil.data.Resource
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
