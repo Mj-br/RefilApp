@@ -113,7 +113,6 @@ fun AppNavHost(
             RegistrationScreen(
                 navController = navController,
                 viewModel = viewModel,
-                state = viewModel.registerState.value,
                 onBack = {
                     navController.popBackStack()
                 },

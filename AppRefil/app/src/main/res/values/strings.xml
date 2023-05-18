@@ -7,6 +7,7 @@
     <string name="error_not_a_valid_phone_number">Please enter a valid phone number</string>
     <string name="error_incorrectly_repeated_password">The passwords do not match</string>
     <string name="error_invalid_credentials">Email or password incorrect</string>
+    <string name="error_password_too_short">Password too short</string>
     <string name="success_registration">Successfully registered new user</string>
     <string name="success_login">Successfully logged in</string>
     <string name="error_unknown">An unknown error occurred</string>
@@ -18,7 +19,6 @@
     <string name="welcome_back">Welcome Back</string>
     <string name="empty" />
     <string name="logout">logout</string>
-
 
 
 </resources>

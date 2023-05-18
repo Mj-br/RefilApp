@@ -1,6 +1,5 @@
 package es.refil.presentation.auth.login
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -186,14 +185,16 @@ fun LoginScreen(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            RoundedButton(
-                                text = "Login",
-                                //displayProgressBar = state.displayProgressBar,
-                                onClick = {
+
+                                RoundedButton(
+                                    text = "Login",
+                                    //enabledButton = { viewModel?.enableLogin(emailValue.value, passwordValue.value) },
+                                    displayProgressBar = loginFlow?.value == Resource.Loading
+                                ) {
                                     //We pass values to LOGIN
                                     viewModel?.login(emailValue.value, passwordValue.value)
                                 }
-                            )
+
 
                             ClickableText(
                                 text = buildAnnotatedString {
@@ -302,5 +303,7 @@ fun LoginScreen(
 
 
     }
+
+
 
 }

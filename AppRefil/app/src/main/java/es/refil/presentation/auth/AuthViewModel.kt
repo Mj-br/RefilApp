@@ -47,6 +47,8 @@ class AuthViewModel @Inject constructor(
             R.string.error_input_empty
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             R.string.error_not_a_valid_email
+        } else if (password.length < 6) {
+            R.string.error_password_too_short
 
         } else null
 
@@ -78,6 +80,8 @@ class AuthViewModel @Inject constructor(
                 R.string.error_input_empty
             } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 R.string.error_not_a_valid_email
+            } else if (password.length < 6) {
+                R.string.error_password_too_short
             } else if (password != confirmPassword) {
                 R.string.error_incorrectly_repeated_password
             } else null
@@ -99,15 +103,11 @@ class AuthViewModel @Inject constructor(
 
     }
 
-
-
     fun logout() = viewModelScope.launch {
         repository.logout()
         _loginFlow.value = null
         _signupFlow.value = null
     }
-
-
 
     fun hideLoginErrorDialog() {
         loginState.value = loginState.value.copy(
@@ -121,5 +121,6 @@ class AuthViewModel @Inject constructor(
         )
     }
 
+    fun enableLogin(email: String, password: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length >= 6
 
 }

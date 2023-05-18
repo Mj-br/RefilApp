@@ -36,15 +36,12 @@ import es.refil.presentation.auth.AuthViewModel
 import es.refil.presentation.components.EventDialog
 import es.refil.presentation.components.RoundedButton
 import es.refil.presentation.components.SocialMediaButton
-import es.refil.ui.theme.FACEBOOKCOLOR
 import es.refil.ui.theme.GMAILCOLOR
-import es.refil.ui.theme.GOOGLECOLOR
 
 @Composable
 fun RegistrationScreen(
     navController: NavController,
     viewModel: AuthViewModel?,
-    state: RegisterStateData,
     onBack: () -> Unit,
     onDismissDialog: () -> Unit
 
@@ -57,7 +54,7 @@ fun RegistrationScreen(
     var confirmPasswordVisibility by remember { mutableStateOf(false) }
 
     val signupFlow = viewModel?.signupFlow?.collectAsState()
-
+    val state = viewModel?.registerState
 
     val focusManager = LocalFocusManager.current
 
@@ -172,13 +169,19 @@ fun RegistrationScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                RoundedButton(
-                    text = "Sign up",
-                    displayProgressBar = state.displayProgressBar,
-                    onClick = {
-                            viewModel?.signup(emailValue.value, passwordValue.value, confirmPasswordValue.value)
+                if (viewModel != null) {
+                    RoundedButton(
+                        text = "Sign up",
+                        //enabledButton = { viewModel.enableLogin(emailValue.value, passwordValue.value) },
+                        displayProgressBar = signupFlow?.value == Resource.Loading
+                    ) {
+                        viewModel.signup(
+                            emailValue.value,
+                            passwordValue.value,
+                            confirmPasswordValue.value
+                        )
                     }
-                )
+                }
 
                 ClickableText(
                     text = buildAnnotatedString {
@@ -261,8 +264,8 @@ fun RegistrationScreen(
         }
     }
 
-    if (state.errorMessage != null){
-        EventDialog(errorMessage = state.errorMessage, onDismiss = onDismissDialog)
+    if (state?.value?.errorMessage != null){
+        EventDialog(errorMessage = state.value.errorMessage!!, onDismiss = onDismissDialog)
     }
 
     signupFlow?.value?.let {
@@ -270,9 +273,9 @@ fun RegistrationScreen(
             is Resource.Failure<*> -> {
 
                 //Toast.makeText(LocalContext.current, it.exception.message, Toast.LENGTH_SHORT).show()
-                if (state.errorMessage != null) {
+                if (state?.value?.errorMessage != null) {
                     EventDialog(
-                        errorMessage = state.errorMessage,
+                        errorMessage = state.value.errorMessage!!,
                         onDismiss = onDismissDialog
                     )
                 }
