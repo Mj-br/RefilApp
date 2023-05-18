@@ -25,7 +25,6 @@ import es.refil.presentation.auth.AuthViewModel
 //Creamos nuestro navegador para todas las pantallas
 @Composable
 fun Navigation(navController: NavHostController) {
-    val authViewModel: AuthViewModel = hiltViewModel()
 
     NavHost(navController = navController, startDestination = "MainMarketScreen") {
         composable("MainMarketScreen") {

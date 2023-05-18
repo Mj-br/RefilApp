@@ -3,9 +3,7 @@ package es.refil.navigation
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -71,7 +69,7 @@ fun AppNavHost(
                     navController.navigate(Destinations.Register.route)
                 },
                 onDismissDialog = {
-                    viewModel.hideErrorDialog()
+                    viewModel.hideLoginErrorDialog()
                 }
             )
         }
@@ -119,7 +117,7 @@ fun AppNavHost(
                 onBack = {
                     navController.popBackStack()
                 },
-                onDismissDialog = viewModel::hideErrorDialog
+                onDismissDialog = viewModel::hideRegisterErrorDialog
             )
 
         }
@@ -127,8 +125,7 @@ fun AppNavHost(
 
 
         composable(
-            //We receive the email and password from the LoginScreen
-            route = Destinations.Profile.route + "/{email}" + "/{password}",
+            route = Destinations.Profile.route,
             arguments = Destinations.Profile.arguments
 
         ) {

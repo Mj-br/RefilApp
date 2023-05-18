@@ -27,7 +27,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppRefilTheme {
-                 val navController = rememberAnimatedNavController()
 
                 BoxWithConstraints {
 

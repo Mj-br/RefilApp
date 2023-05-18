@@ -108,7 +108,14 @@ class AuthViewModel @Inject constructor(
     }
 
 
-    fun hideErrorDialog() {
+
+    fun hideLoginErrorDialog() {
+        loginState.value = loginState.value.copy(
+            errorMessage = null
+        )
+    }
+
+    fun hideRegisterErrorDialog() {
         registerState.value = registerState.value.copy(
             errorMessage = null
         )

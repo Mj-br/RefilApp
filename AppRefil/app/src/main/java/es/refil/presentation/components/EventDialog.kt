@@ -3,11 +3,13 @@ package es.refil.presentation.components
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -17,11 +19,15 @@ import androidx.compose.ui.unit.sp
 fun EventDialog(
     modifier: Modifier = Modifier,
     @StringRes errorMessage: Int,
-    onDismiss: (() -> Unit)? = null
-) {
+    onDismiss: (() -> Unit)? = null,
+
+    ) {
+    val shape = RoundedCornerShape(16.dp)
+    val backgroundColor = MaterialTheme.colors.surface
+
     AlertDialog(
         modifier = modifier
-            .background(Color.White)
+            .background(backgroundColor, shape)
             .padding(16.dp),
         onDismissRequest = { onDismiss?.invoke() },
         title = {
@@ -36,7 +42,7 @@ fun EventDialog(
         },
         text = {
             Text(
-                text = LocalContext.current.getString(errorMessage),
+                text = stringResource(errorMessage),
                 style = TextStyle(
                     color = MaterialTheme.colors.onSurface,
                     fontSize = 16.sp
@@ -50,8 +56,14 @@ fun EventDialog(
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.End
             ) {
-                TextButton(onClick = { onDismiss?.invoke() }) {
-                    Text(text = "Accept", style = MaterialTheme.typography.button)
+                TextButton(
+                    onClick = { onDismiss?.invoke() },
+                ) {
+                    Text(
+                        text = "Accept",
+                        style = MaterialTheme.typography.button
+
+                    )
                 }
             }
         }
