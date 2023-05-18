@@ -1,4 +1,4 @@
-package es.refil.data.utils.auth
+package es.refil.data.network.auth
 
 import com.google.firebase.auth.FirebaseUser
 import es.refil.data.Resource

@@ -16,16 +16,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import es.refil.data.models.BottomNavItem
 import es.refil.favorites.ui.FavoriteScreen
-import es.refil.presentation.login.LoginScreen
+import es.refil.presentation.auth.login.LoginScreen
 import es.refil.mainMarket.MainMarketScreen
 import es.refil.navigation.Destinations
-import es.refil.presentation.login.LoginViewModel
+import es.refil.presentation.auth.AuthViewModel
 
 
 //Creamos nuestro navegador para todas las pantallas
 @Composable
 fun Navigation(navController: NavHostController) {
-    val loginViewModel: LoginViewModel = hiltViewModel()
+    val authViewModel: AuthViewModel = hiltViewModel()
 
     NavHost(navController = navController, startDestination = "MainMarketScreen") {
         composable("MainMarketScreen") {
@@ -33,16 +33,8 @@ fun Navigation(navController: NavHostController) {
         }
 
         composable("LoginScreen") {
-            LoginScreen(
-                state = loginViewModel.state.value,
-                onLogin = loginViewModel::login,
-                onNavigateToRegister = {
-                    navController.navigate(Destinations.Register.route)
-                },
-                onDismissDialog = {
-                    loginViewModel.hideErrorDialog()
-                }
-            )
+            //TODO: Esto es para el bottom bar, arreglar luego.
+            /*LoginScreen(navController, authViewModel)*/
         }
 
         composable("FavoriteScreen") {

@@ -1,5 +1,6 @@
-package es.refil.presentation.login
+package es.refil.presentation.auth.login
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,11 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,7 +33,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import es.refil.R
+import es.refil.data.Resource
+import es.refil.navigation.Destinations
 import es.refil.presentation.auth.AuthViewModel
 import es.refil.presentation.components.EventDialog
 import es.refil.presentation.components.RoundedButton
@@ -44,9 +44,8 @@ import es.refil.presentation.components.TransparentTextField
 
 @Composable
 fun LoginScreen(
-    viewModel: AuthViewModel = hiltViewModel(),
-    state: LoginStateData,
-    onLogin: (String, String) -> Unit,
+    viewModel: AuthViewModel? = hiltViewModel(),
+    navController: NavController,
     onNavigateToRegister: () -> Unit,
     onDismissDialog: () -> Unit
 ) {
@@ -57,6 +56,9 @@ fun LoginScreen(
     val passwordValue = rememberSaveable { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
+
+    val loginFlow = viewModel?.loginFlow?.collectAsState()
+    val state = viewModel?.loginState
 
     //Header
     Box(
@@ -139,7 +141,7 @@ fun LoginScreen(
                                         focusManager.clearFocus()
 
                                         //We pass values to LOGIN
-                                        onLogin(emailValue.value, passwordValue.value)
+                                        viewModel?.login(emailValue.value, passwordValue.value)
 
                                     }
                                 ),
@@ -186,10 +188,10 @@ fun LoginScreen(
                         ) {
                             RoundedButton(
                                 text = "Login",
-                                displayProgressBar = state.displayProgressBar,
+                                //displayProgressBar = state.displayProgressBar,
                                 onClick = {
                                     //We pass values to LOGIN
-                                    onLogin(emailValue.value, passwordValue.value)
+                                    viewModel?.login(emailValue.value, passwordValue.value)
                                 }
                             )
 
@@ -219,6 +221,8 @@ fun LoginScreen(
 
                 }
 
+
+                //TODO: CAMBIAR ESTO SI CARGA MUY GRANDE
                 FloatingActionButton(
                     modifier = Modifier
                         .size(72.dp)
@@ -245,12 +249,58 @@ fun LoginScreen(
 
         }
 
-        if (state.errorMessage != null) {
+        if (state?.value?.errorMessage != null) {
             EventDialog(
-                errorMessage = state.errorMessage,
+                errorMessage = state.value.errorMessage!!,
                 onDismiss = onDismissDialog
             )
         }
+
+
+        loginFlow?.value?.let {
+            when (it) {
+                is Resource.Failure<*> -> {
+
+                    //Toast.makeText(LocalContext.current, it.exception.message, Toast.LENGTH_SHORT).show()
+                    if (state?.value?.errorMessage != null) {
+                        EventDialog(
+                            errorMessage = state.value.errorMessage!!,
+                            onDismiss = onDismissDialog
+                        )
+                    }
+
+                }
+                Resource.Loading -> {
+                    ConstraintLayout(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        val (refLoader) = createRefs()
+                        CircularProgressIndicator(
+                            modifier = Modifier.constrainAs(refLoader) {
+                                top.linkTo(parent.top)
+                                bottom.linkTo(parent.bottom)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            }
+
+                        )
+                    }
+                }
+
+                is Resource.Success -> {
+                    LaunchedEffect(Unit) {
+                        navController.navigate(
+                            Destinations.Profile.route
+                        ) {
+                            popUpTo(Destinations.Login.route) { inclusive = true }
+                        }
+                    }
+
+                }
+            }
+        }
+
+
     }
 
 }

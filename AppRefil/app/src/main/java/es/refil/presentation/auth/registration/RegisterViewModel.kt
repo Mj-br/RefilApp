@@ -1,4 +1,4 @@
-package es.refil.presentation.registration
+package es.refil.presentation.auth.registration
 
 import android.util.Patterns
 import androidx.compose.runtime.MutableState
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class RegisterViewModel @Inject constructor() : ViewModel() {
 
-    val state: MutableState<RegisterStateData> = mutableStateOf(RegisterStateData())
+    private val state: MutableState<RegisterStateData> = mutableStateOf(RegisterStateData())
 
     fun register(
         email: String,

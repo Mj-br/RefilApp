@@ -1,3 +1,4 @@
+/*
 package es.refil.navigation
 
 import androidx.compose.animation.*
@@ -7,17 +8,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
+import es.refil.presentation.auth.AuthViewModel
 import es.refil.presentation.login.LoginScreen
-import es.refil.presentation.login.LoginViewModel
-import es.refil.presentation.profile.ProfileScreen
-import es.refil.presentation.registration.RegisterViewModel
 import es.refil.presentation.registration.RegistrationScreen
+
+//Inject hilt
 
 object RefillNavigation {
 
     @ExperimentalAnimationApi
     fun NavGraphBuilder.addLogin(
-        navController: NavController
+        navController: NavController,
+        viewModel: AuthViewModel?
     ) {
         composable(
             route = Destinations.Login.route,
@@ -53,12 +55,12 @@ object RefillNavigation {
             }
 
         ) {
-            val loginViewModel: LoginViewModel = hiltViewModel()
-            val email = loginViewModel.state.value.email
-            val password = loginViewModel.state.value.password
+            val authViewModel: AuthViewModel = hiltViewModel()
+            val email = authViewModel.loginState.value.email
+            val password = authViewModel.loginState.value.password
 
             //We pass all we need to the LoginScreen, before this we create parameters to the LoginScreen
-            if (loginViewModel.state.value.successLogin) {
+            if (authViewModel.loginState.value.successLogin) {
                 LaunchedEffect(key1 = Unit) {
                     navController.navigate(
                         //We pass the email and password to the ProfileScreen TODO: FIRESTORE, WE NEED TO PASS THIS TO THE FIRESTORE
@@ -75,13 +77,12 @@ object RefillNavigation {
 
             } else {
                 LoginScreen(
-                    state = loginViewModel.state.value,
-                    onLogin = loginViewModel::login,
+                    navController = navController,
                     onNavigateToRegister = {
                         navController.navigate(Destinations.Register.route)
                     },
                     onDismissDialog = {
-                        loginViewModel.hideErrorDialog()
+                        authViewModel.hideErrorDialog()
                     }
                 )
             }
@@ -91,7 +92,8 @@ object RefillNavigation {
 
     @OptIn(ExperimentalAnimationApi::class)
     fun NavGraphBuilder.addRegister(
-        navController: NavController
+        navController: NavController,
+        viewModel: AuthViewModel?
     ) {
 
         composable(
@@ -129,15 +131,16 @@ object RefillNavigation {
             }
 
         ) {
-            val registerViewModel: RegisterViewModel = hiltViewModel()
+            val authViewModel: AuthViewModel = hiltViewModel()
             //We pass all we need to the RegisterScreen, before this we create parameters to the RegisterScreen
             RegistrationScreen(
-                state = registerViewModel.state.value,
-                onRegister = registerViewModel::register,
+                navController = navController,
+                viewModel = authViewModel,
+                state = authViewModel.state.value,
                 onBack = {
                     navController.popBackStack()
                 },
-                onDismissDialog = registerViewModel::hideErrorDialog
+                onDismissDialog = authViewModel::hideErrorDialog
             )
 
         }
@@ -159,4 +162,4 @@ object RefillNavigation {
 
         }
     }
-}
+}*/

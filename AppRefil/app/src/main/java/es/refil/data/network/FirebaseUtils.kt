@@ -1,4 +1,4 @@
-package es.refil.data.utils
+package es.refil.data.network
 
 import com.google.android.gms.tasks.Task
 import kotlinx.coroutines.ExperimentalCoroutinesApi

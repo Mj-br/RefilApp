@@ -9,10 +9,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import com.google.accompanist.navigation.animation.*
 import dagger.hilt.android.AndroidEntryPoint
 import es.refil.navigation.AppNavHost
-import es.refil.navigation.Destinations
-import es.refil.navigation.RefillNavigation.addLogin
-import es.refil.navigation.RefillNavigation.addProfile
-import es.refil.navigation.RefillNavigation.addRegister
 import es.refil.presentation.auth.AuthViewModel
 import es.refil.presentation.mainMarket.MainMarketViewModel
 import es.refil.ui.theme.AppRefilTheme
@@ -35,7 +31,7 @@ class MainActivity : ComponentActivity() {
 
                 BoxWithConstraints {
 
-                    AppNavHost()
+                    AppNavHost(viewModel)
 
                 }
             }

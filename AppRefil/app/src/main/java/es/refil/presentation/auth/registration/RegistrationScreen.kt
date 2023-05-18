@@ -1,4 +1,4 @@
-package es.refil.presentation.registration
+package es.refil.presentation.auth.registration
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -10,15 +10,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import es.refil.presentation.components.TransparentTextField
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
@@ -32,6 +28,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
+import es.refil.data.Resource
+import es.refil.navigation.Destinations
+import es.refil.presentation.auth.AuthViewModel
 import es.refil.presentation.components.EventDialog
 import es.refil.presentation.components.RoundedButton
 import es.refil.presentation.components.SocialMediaButton
@@ -41,9 +42,9 @@ import es.refil.ui.theme.GOOGLECOLOR
 
 @Composable
 fun RegistrationScreen(
-    //We pass parameters to the registration screen in order to pass the ViewModel in the main activity
+    navController: NavController,
+    viewModel: AuthViewModel?,
     state: RegisterStateData,
-    onRegister: (String, String, String) -> Unit,
     onBack: () -> Unit,
     onDismissDialog: () -> Unit
 
@@ -54,6 +55,8 @@ fun RegistrationScreen(
     val confirmPasswordValue = rememberSaveable { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
     var confirmPasswordVisibility by remember { mutableStateOf(false) }
+
+    val signupFlow = viewModel?.signupFlow?.collectAsState()
 
 
     val focusManager = LocalFocusManager.current
@@ -146,11 +149,8 @@ fun RegistrationScreen(
                     keyboardActions = KeyboardActions(
                         onDone = {
                             focusManager.clearFocus()
-                            onRegister(
-                                emailValue.value,
-                                passwordValue.value,
-                                confirmPasswordValue.value
-                            )
+
+                            viewModel?.signup(emailValue.value, passwordValue.value, confirmPasswordValue.value)
                         }
                     ),
                     imeAction = ImeAction.Done,
@@ -176,11 +176,7 @@ fun RegistrationScreen(
                     text = "Sign up",
                     displayProgressBar = state.displayProgressBar,
                     onClick = {
-                        onRegister(
-                            emailValue.value,
-                            passwordValue.value,
-                            confirmPasswordValue.value
-                        )
+                            viewModel?.signup(emailValue.value, passwordValue.value, confirmPasswordValue.value)
                     }
                 )
 
@@ -267,6 +263,50 @@ fun RegistrationScreen(
 
     if (state.errorMessage != null){
         EventDialog(errorMessage = state.errorMessage, onDismiss = onDismissDialog)
+    }
+
+    signupFlow?.value?.let {
+        when (it) {
+            is Resource.Failure<*> -> {
+
+                //Toast.makeText(LocalContext.current, it.exception.message, Toast.LENGTH_SHORT).show()
+                if (state.errorMessage != null) {
+                    EventDialog(
+                        errorMessage = state.errorMessage,
+                        onDismiss = onDismissDialog
+                    )
+                }
+
+            }
+            Resource.Loading -> {
+                ConstraintLayout(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    val (refLoader) = createRefs()
+                    CircularProgressIndicator(
+                        modifier = Modifier.constrainAs(refLoader) {
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        }
+
+                    )
+                }
+            }
+
+            is Resource.Success -> {
+                LaunchedEffect(Unit) {
+                    navController.navigate(
+                        Destinations.Profile.route
+                    ) {
+                        //TODO: ChANGE THIS TO NAVIGATE TO MARKET SCREEN
+                        popUpTo(Destinations.Profile.route) { inclusive = true }
+                    }
+                }
+
+            }
+        }
     }
 
 }

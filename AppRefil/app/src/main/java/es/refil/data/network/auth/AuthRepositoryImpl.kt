@@ -1,4 +1,4 @@
-package es.refil.data.utils.auth
+package es.refil.data.network.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -30,7 +30,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun signUp(email: String, password: String): Resource<FirebaseUser> {
         return try {
             val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            result?.user?.updateProfile(UserProfileChangeRequest.Builder().setDisplayName(email).build())?.await()
+            result?.user?.updateProfile(UserProfileChangeRequest.Builder().setDisplayName(email.split("@")[0]).build())?.await() //TODO: We need to change this because we are using email and we need to separate the name from the email
             Resource.Success(result.user!!)
 
         } catch (e: Exception) {

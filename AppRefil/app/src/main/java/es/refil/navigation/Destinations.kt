@@ -12,11 +12,12 @@ sealed class Destinations(
     object Register: Destinations("register", emptyList())
     object Profile: Destinations(
         "profile",
-        listOf(
+        emptyList()
+        /*listOf(
             navArgument("email"){type = NavType.StringType},
             navArgument("password"){type = NavType.StringType}
 
-        )
+        )*/
     )
 
     object QrScreen: Destinations("qrScreen", emptyList())

@@ -1,4 +1,4 @@
-package es.refil.presentation.registration
+package es.refil.presentation.auth.registration
 
 import androidx.annotation.StringRes
 
