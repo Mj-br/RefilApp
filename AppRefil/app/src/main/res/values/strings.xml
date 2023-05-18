@@ -11,14 +11,14 @@
     <string name="success_registration">Successfully registered new user</string>
     <string name="success_login">Successfully logged in</string>
     <string name="error_unknown">An unknown error occurred</string>
-    <string name="email">email</string>
+    <string name="email">Email</string>
     <string name="password">password</string>
     <string name="login">login</string>
-    <string name="name">name</string>
+    <string name="name">Name</string>
     <string name="signup">signup</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="empty" />
-    <string name="logout">logout</string>
+    <string name="logout">Logout</string>
 
 
 </resources>

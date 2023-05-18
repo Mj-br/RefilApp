@@ -35,22 +35,19 @@ class AuthViewModel @Inject constructor(
     val currentUser: FirebaseUser?
         get() = repository.currentUser
 
+    //region Login and Signup functions
+
+    //If we are already logged in, we don't need to do anything
     init {
         if (repository.currentUser != null) {
             _loginFlow.value = Resource.Success(repository.currentUser!!)
         }
     }
 
+    //If we are not logged in, we need to do Login
     fun login(email:String, password:String) {
 
-        val errorMessage = if (email.isBlank() || password.isBlank()) {
-            R.string.error_input_empty
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            R.string.error_not_a_valid_email
-        } else if (password.length < 6) {
-            R.string.error_password_too_short
-
-        } else null
+        val errorMessage = inputLoginError(email, password)
 
         errorMessage?.let {
             loginState.value = loginState.value.copy(errorMessage = it)
@@ -74,17 +71,14 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+
+
+
+
+    //If we do not have an account, we need to do Signup
     fun signup(email: String, password: String, confirmPassword: String) {
         val errorMessage =
-            if (email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
-                R.string.error_input_empty
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                R.string.error_not_a_valid_email
-            } else if (password.length < 6) {
-                R.string.error_password_too_short
-            } else if (password != confirmPassword) {
-                R.string.error_incorrectly_repeated_password
-            } else null
+            inputSignUpError(email, password, confirmPassword)
 
         errorMessage?.let {
             registerState.value = registerState.value.copy(errorMessage = errorMessage)
@@ -103,6 +97,7 @@ class AuthViewModel @Inject constructor(
 
     }
 
+    //Logout
     fun logout() = viewModelScope.launch {
         repository.logout()
         _loginFlow.value = null
@@ -114,13 +109,43 @@ class AuthViewModel @Inject constructor(
             errorMessage = null
         )
     }
-
     fun hideRegisterErrorDialog() {
         registerState.value = registerState.value.copy(
             errorMessage = null
         )
     }
 
-    fun enableLogin(email: String, password: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length >= 6
+
+    //fun enableLogin(email: String, password: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length >= 6
+
+    private fun inputLoginError(email: String, password: String) =
+        if (email.isBlank() || password.isBlank()) {
+            R.string.error_input_empty
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            R.string.error_not_a_valid_email
+        } else if (password.length < 6) {
+            R.string.error_password_too_short
+
+        } else null
+
+    private fun inputSignUpError(
+        email: String,
+        password: String,
+        confirmPassword: String = ""
+    ) = if (email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
+        R.string.error_input_empty
+    } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        R.string.error_not_a_valid_email
+    } else if (password.length < 6) {
+        R.string.error_password_too_short
+    } else if (password != confirmPassword) {
+        R.string.error_incorrectly_repeated_password
+    } else null
+
+    //endregion
+
+
+
+
 
 }

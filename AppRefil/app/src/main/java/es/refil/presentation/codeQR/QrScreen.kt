@@ -1,9 +1,7 @@
-package es.refil.presentation.profile
+package es.refil.presentation.codeQR
 
 import android.content.res.Configuration
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -12,13 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import es.refil.R
@@ -41,7 +35,7 @@ fun ProfileScreen(viewModel: AuthViewModel?, navController: NavHostController) {
     ) {
 
         Text(
-            text = "Welcome",
+            text = "QR Code",
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -52,7 +46,7 @@ fun ProfileScreen(viewModel: AuthViewModel?, navController: NavHostController) {
             color = MaterialTheme.colorScheme.onSurface
         )
 
-        Image(
+        /*Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "Login_Image",
             contentScale = ContentScale.Inside,
@@ -61,7 +55,7 @@ fun ProfileScreen(viewModel: AuthViewModel?, navController: NavHostController) {
                     CircleShape
                 )
                 .size(150.dp)
-        )
+        )*/
 
         Column(
             modifier = Modifier
@@ -95,14 +89,14 @@ fun ProfileScreen(viewModel: AuthViewModel?, navController: NavHostController) {
                     .wrapContentHeight()
             ) {
                 Text(
-                    text = stringResource(id = R.string.email),
+                    text = "UUID",
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.weight(0.3f),
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Text(
-                    text = viewModel?.currentUser?.email ?: "",
+                    text = viewModel?.currentUser?.uid ?: "",
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.weight(0.7f),
                     color = MaterialTheme.colorScheme.onSurface
@@ -120,40 +114,20 @@ fun ProfileScreen(viewModel: AuthViewModel?, navController: NavHostController) {
                     disabledContentColor = Color.White
                 ),
                 onClick = {
-                    /*TODO:QRCODE
-              navController.navigate(Destinations.QrScreen.route) {
-                      popUpTo(Destinations.Profile.route) {
-                          inclusive = true
-                      }
-                  }*/
-                },
-                shape = RoundedCornerShape(50),
-            ) {
-                Text(
-                    text = "Generate QR",
-                    style = MaterialTheme.typography.titleSmall
-                )
-            }
-
-
-            Button(
-                onClick = {
-                    viewModel?.logout()
-                    navController.navigate(Destinations.Login.route) {
+                    navController.navigate(Destinations.Profile.route) {
                         popUpTo(Destinations.Profile.route) {
                             inclusive = true
                         }
                     }
                 },
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = spacing.extraLarge),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF2196F3)
-                )
+                shape = RoundedCornerShape(50),
             ) {
-                Text(text = stringResource(id = R.string.logout))
+                Text(
+                    text = "Back",
+                    style = MaterialTheme.typography.titleSmall
+                )
             }
+
         }
     }
 }

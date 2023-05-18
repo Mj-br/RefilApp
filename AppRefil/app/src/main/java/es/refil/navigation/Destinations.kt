@@ -20,8 +20,8 @@ sealed class Destinations(
         )*/
     )
 
-    object QrScreen: Destinations("qrScreen", emptyList())
-    object MainMarket: Destinations("mainMarket", emptyList())
-    object DetailProduct: Destinations("detailMarket", emptyList())
+    object QrScreen: Destinations("QrScreen", emptyList())
+    object MainMarket: Destinations("MainMarketScreen", emptyList())
+    object DetailProduct: Destinations("DetailProductScreen", emptyList())
 
 }
