@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val repository: AuthRepository
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     val loginState: MutableState<LoginStateData> = mutableStateOf(LoginStateData())
@@ -33,14 +33,14 @@ class AuthViewModel @Inject constructor(
     val signupFlow: StateFlow<Resource<FirebaseUser>?> = _signupFlow
 
     val currentUser: FirebaseUser?
-        get() = repository.currentUser
+        get() = authRepository.currentUser
 
     //region Login and Signup functions
 
     //If we are already logged in, we don't need to do anything
     init {
-        if (repository.currentUser != null) {
-            _loginFlow.value = Resource.Success(repository.currentUser!!)
+        if (authRepository.currentUser != null) {
+            _loginFlow.value = Resource.Success(authRepository.currentUser!!)
         }
     }
 
@@ -65,7 +65,7 @@ class AuthViewModel @Inject constructor(
             loginState.value = loginState.value.copy(successLogin = true)
 
             _loginFlow.value = Resource.Loading
-            val result = repository.login(email, password)
+            val result = authRepository.login(email, password)
             _loginFlow.value = result
 
         }
@@ -89,7 +89,7 @@ class AuthViewModel @Inject constructor(
 
         viewModelScope.launch {
             _signupFlow.value = Resource.Loading
-            val result = repository.signUp(email, password)
+            val result = authRepository.signUp(email, password)
             _signupFlow.value = result
 
         }
@@ -99,7 +99,7 @@ class AuthViewModel @Inject constructor(
 
     //Logout
     fun logout() = viewModelScope.launch {
-        repository.logout()
+        authRepository.logout()
         _loginFlow.value = null
         _signupFlow.value = null
     }
@@ -143,9 +143,4 @@ class AuthViewModel @Inject constructor(
     } else null
 
     //endregion
-
-
-
-
-
 }

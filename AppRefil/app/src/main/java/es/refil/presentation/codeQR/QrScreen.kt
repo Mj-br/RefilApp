@@ -23,7 +23,7 @@ import es.refil.ui.theme.spacing
 
 
 @Composable
-fun ProfileScreen(viewModel: AuthViewModel?, navController: NavHostController) {
+fun QrScreen(viewModel: QrViewModel?, navController: NavHostController) {
     val spacing = MaterialTheme.spacing
     Column(
         modifier = Modifier
@@ -136,7 +136,7 @@ fun ProfileScreen(viewModel: AuthViewModel?, navController: NavHostController) {
 @Composable
 fun HomeScreenPreviewLight() {
     AppRefilTheme {
-        ProfileScreen(null, rememberNavController())
+        QrScreen(null, rememberNavController())
     }
 }
 
@@ -144,6 +144,6 @@ fun HomeScreenPreviewLight() {
 @Composable
 fun HomeScreenPreviewDark() {
     AppRefilTheme {
-        ProfileScreen(null, rememberNavController())
+        QrScreen(null, rememberNavController())
     }
 }

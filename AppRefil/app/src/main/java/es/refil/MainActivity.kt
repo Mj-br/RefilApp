@@ -10,6 +10,7 @@ import com.google.accompanist.navigation.animation.*
 import dagger.hilt.android.AndroidEntryPoint
 import es.refil.navigation.AppNavHost
 import es.refil.presentation.auth.AuthViewModel
+import es.refil.presentation.codeQR.QrViewModel
 import es.refil.presentation.mainMarket.MainMarketViewModel
 import es.refil.ui.theme.AppRefilTheme
 
@@ -21,6 +22,7 @@ class MainActivity : ComponentActivity() {
     private val mainMarketViewModel: MainMarketViewModel by viewModels()
 
     private val viewModel by viewModels<AuthViewModel>()
+    private val qrViewModel by viewModels<QrViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
                 BoxWithConstraints {
 
-                    AppNavHost(viewModel)
+                    AppNavHost(viewModel, qrViewModel)
 
                 }
             }

@@ -151,4 +151,7 @@ dependencies {
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-firestore-ktx'
+
+    //GitHub repository to implement QR code
+    implementation 'com.github.androidmads:QRGenerator:1.0.1'
 }

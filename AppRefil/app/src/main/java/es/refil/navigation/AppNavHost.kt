@@ -11,13 +11,15 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import es.refil.presentation.auth.AuthViewModel
 import es.refil.presentation.auth.login.LoginScreen
 import es.refil.presentation.auth.registration.RegistrationScreen
+import es.refil.presentation.codeQR.QrScreen
+import es.refil.presentation.codeQR.QrViewModel
 import es.refil.presentation.profile.ProfileScreen
 
 
 @ExperimentalAnimationApi
 @Composable
 fun AppNavHost(
-    viewModel: AuthViewModel,
+    authViewModel: AuthViewModel, qrViewModel: QrViewModel?,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberAnimatedNavController(),
     startDestination: String = Destinations.Login.route
@@ -63,13 +65,13 @@ fun AppNavHost(
         ) {
             //We pass all we need to the LoginScreen, before this we create parameters to the LoginScreen
             LoginScreen(
-                viewModel = viewModel,
+                viewModel = authViewModel,
                 navController = navController,
                 onNavigateToRegister = {
                     navController.navigate(Destinations.Register.route)
                 },
                 onDismissDialog = {
-                    viewModel.hideLoginErrorDialog()
+                    authViewModel.hideLoginErrorDialog()
                 }
             )
         }
@@ -112,11 +114,11 @@ fun AppNavHost(
             //We pass all we need to the RegisterScreen, before this we create parameters to the RegisterScreen
             RegistrationScreen(
                 navController = navController,
-                viewModel = viewModel,
+                viewModel = authViewModel,
                 onBack = {
                     navController.popBackStack()
                 },
-                onDismissDialog = viewModel::hideRegisterErrorDialog
+                onDismissDialog = authViewModel::hideRegisterErrorDialog
             )
 
         }
@@ -128,8 +130,15 @@ fun AppNavHost(
             arguments = Destinations.Profile.arguments
 
         ) {
-            ProfileScreen(viewModel, navController)
+            ProfileScreen(authViewModel, navController)
 
+        }
+
+        composable(
+            route = Destinations.QrScreen.route,
+            arguments = Destinations.QrScreen.arguments
+        ){
+            QrScreen(qrViewModel, navController)
         }
 
 

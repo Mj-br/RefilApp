@@ -42,15 +42,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     }
 
-    /*override suspend fun getQrCode(uuid: String): Resource<FirebaseUser> {
-        return try {
-           val
 
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Resource.Failure<FirebaseUser>(e)
-        }
-    }*/
 
     override fun logout() {
         firebaseAuth.signOut()

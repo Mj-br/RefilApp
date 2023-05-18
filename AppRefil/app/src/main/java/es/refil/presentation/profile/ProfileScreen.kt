@@ -120,12 +120,12 @@ fun ProfileScreen(viewModel: AuthViewModel?, navController: NavHostController) {
                     disabledContentColor = Color.White
                 ),
                 onClick = {
-                    /*TODO:QRCODE
-              navController.navigate(Destinations.QrScreen.route) {
-                      popUpTo(Destinations.Profile.route) {
-                          inclusive = true
-                      }
-                  }*/
+
+                    navController.navigate(Destinations.QrScreen.route) {
+                        popUpTo(Destinations.Profile.route) {
+                            inclusive = true
+                        }
+                    }
                 },
                 shape = RoundedCornerShape(50),
             ) {
