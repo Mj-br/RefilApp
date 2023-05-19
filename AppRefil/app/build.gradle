@@ -154,4 +154,10 @@ dependencies {
 
     //GitHub repository to implement QR code
     implementation 'com.github.androidmads:QRGenerator:1.0.1'
+
+    //QR Code
+    implementation ('com.journeyapps:zxing-android-embedded:4.3.0') { transitive = false }
+    implementation'com.google.zxing:core:3.5.0'
+
+
 }

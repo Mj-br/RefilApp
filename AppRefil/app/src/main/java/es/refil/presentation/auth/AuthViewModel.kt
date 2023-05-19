@@ -115,7 +115,7 @@ class AuthViewModel @Inject constructor(
         )
     }
 
-
+    // Show button logic
     //fun enableLogin(email: String, password: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length >= 6
 
     private fun inputLoginError(email: String, password: String) =

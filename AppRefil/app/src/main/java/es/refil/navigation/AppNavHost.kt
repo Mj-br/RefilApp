@@ -123,8 +123,6 @@ fun AppNavHost(
 
         }
 
-
-
         composable(
             route = Destinations.Profile.route,
             arguments = Destinations.Profile.arguments
@@ -142,5 +140,20 @@ fun AppNavHost(
         }
 
 
+        composable(
+            route = Destinations.MainMarket.route,
+            arguments = Destinations.MainMarket.arguments) {
+        }
+
+
+        composable(
+            route = Destinations.Favorites.route,
+            arguments = Destinations.Favorites.arguments) {
+        }
+
     }
+
+
 }
+
+

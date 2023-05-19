@@ -1,6 +1,8 @@
 package es.refil.presentation.codeQR
 
 import android.content.res.Configuration
+import android.media.Image
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -11,13 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import es.refil.R
 import es.refil.navigation.Destinations
-import es.refil.presentation.auth.AuthViewModel
+import es.refil.presentation.components.CreateQrCode
 import es.refil.ui.theme.AppRefilTheme
 import es.refil.ui.theme.spacing
 
@@ -25,6 +29,7 @@ import es.refil.ui.theme.spacing
 @Composable
 fun QrScreen(viewModel: QrViewModel?, navController: NavHostController) {
     val spacing = MaterialTheme.spacing
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,16 +51,15 @@ fun QrScreen(viewModel: QrViewModel?, navController: NavHostController) {
             color = MaterialTheme.colorScheme.onSurface
         )
 
-        /*Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "Login_Image",
-            contentScale = ContentScale.Inside,
-            modifier = Modifier
-                .clip(
-                    CircleShape
-                )
-                .size(150.dp)
-        )*/
+
+
+        Box(
+            modifier = Modifier.fillMaxWidth().weight(0.2f),
+            contentAlignment = Alignment.Center
+        ) {
+            CreateQrCode(uuid = viewModel?.currentUser?.uid ?: "")
+        }
+
 
         Column(
             modifier = Modifier
@@ -115,9 +119,7 @@ fun QrScreen(viewModel: QrViewModel?, navController: NavHostController) {
                 ),
                 onClick = {
                     navController.navigate(Destinations.Profile.route) {
-                        popUpTo(Destinations.Profile.route) {
-                            inclusive = true
-                        }
+                        popUpTo(Destinations.Profile.route)
                     }
                 },
                 shape = RoundedCornerShape(50),
@@ -131,6 +133,8 @@ fun QrScreen(viewModel: QrViewModel?, navController: NavHostController) {
         }
     }
 }
+
+
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable

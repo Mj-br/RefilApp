@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.BoxWithConstraints
-import com.google.accompanist.navigation.animation.*
+import com.google.zxing.MultiFormatReader
 import dagger.hilt.android.AndroidEntryPoint
 import es.refil.navigation.AppNavHost
 import es.refil.presentation.auth.AuthViewModel
@@ -28,16 +28,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             AppRefilTheme {
+                        BoxWithConstraints {
 
-                BoxWithConstraints {
+                            AppNavHost(viewModel, qrViewModel)
 
-                    AppNavHost(viewModel, qrViewModel)
-
-                }
+                        }
             }
         }
+
     }
+
 }
 
 

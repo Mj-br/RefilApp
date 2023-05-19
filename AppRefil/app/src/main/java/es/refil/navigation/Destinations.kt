@@ -22,6 +22,7 @@ sealed class Destinations(
 
     object QrScreen: Destinations("QrScreen", emptyList())
     object MainMarket: Destinations("MainMarketScreen", emptyList())
+    object Favorites: Destinations("FavoriteScreen", emptyList())
     object DetailProduct: Destinations("DetailProductScreen", emptyList())
 
 }

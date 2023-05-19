@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import es.refil.data.models.BottomNavItem
+import es.refil.presentation.components.BottomNavigationBar
 
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -21,10 +22,9 @@ fun ScaffoldMain() {
     //TODO: Tengo que ver el video de Aris donde poner el Scaffold o simplemente ir con Phillip y meterlo directamente.
 
         Scaffold(
-        /*TODO: Pasamos el toolbar
-        TopAppBar() {
+//TODO: Pasamos el toolbar
 
-        }*/
+
 
         bottomBar = {
             BottomNavigationBar(
@@ -52,7 +52,9 @@ fun ScaffoldMain() {
                 navController = navController,
                 onItemClick = {
                     navController.navigate(it.route) //If it refers to this item (screen), it will navigate to it
-                }
+                },
+                showBottomBar = true //Change this if you want to hide the bottom bar
+
             )
         }
 
