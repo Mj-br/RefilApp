@@ -117,7 +117,6 @@ class AuthViewModel @Inject constructor(
             _signupFlow.value = Resource.Loading
             val result = authRepository.signUp(email, password)
             _signupFlow.value = result
-
         }
 
 
@@ -170,4 +169,8 @@ class AuthViewModel @Inject constructor(
     } else null
 
     //endregion
+
+
+
+
 }

@@ -48,7 +48,7 @@ fun RegistrationScreen(
     onBack: () -> Unit,
     onDismissDialog: () -> Unit,
     state: RegisterStateData,
-    onSignInClick: () -> Unit
+    onSignInClick: () -> Unit,
 
 ) {
 
@@ -187,6 +187,9 @@ fun RegistrationScreen(
                             passwordValue.value,
                             confirmPasswordValue.value
                         )
+
+                        Toast.makeText(context, "Sign up successful", Toast.LENGTH_SHORT).show()
+
                     }
                 }
 

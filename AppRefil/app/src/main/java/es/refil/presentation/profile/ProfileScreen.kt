@@ -30,6 +30,7 @@ import coil.compose.AsyncImage
 import es.refil.R
 import es.refil.navigation.Destinations
 import es.refil.presentation.auth.AuthViewModel
+import es.refil.presentation.user_detail.UserDetailViewModel
 import es.refil.ui.theme.AppRefilTheme
 import es.refil.ui.theme.spacing
 
@@ -37,11 +38,13 @@ import es.refil.ui.theme.spacing
 @Composable
 fun ProfileScreen(
     viewModel: AuthViewModel? = hiltViewModel(),
+    userViewModel: UserDetailViewModel = hiltViewModel(),
     navController: NavHostController,
     userData: es.refil.presentation.auth.registration.UserData?,
     onSignOut: () -> Unit
 ) {
     val spacing = MaterialTheme.spacing
+
 
     Column(
         modifier = Modifier
@@ -163,7 +166,7 @@ fun ProfileScreen(
 
                 if (userData?.points != null) {
                     Text(
-                        text = userData.points.toString(),
+                        text = userViewModel.getPoints().toString(),
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.weight(0.3f),
                         color = MaterialTheme.colorScheme.onSurface
@@ -221,7 +224,7 @@ fun ProfileScreen(
     }
 }
 
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
+/*@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 fun HomeScreenPreviewLight() {
     AppRefilTheme {
@@ -253,4 +256,4 @@ fun HomeScreenPreviewDark() {
             ),
         ) {}
     }
-}
+}*/

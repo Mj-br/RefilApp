@@ -10,6 +10,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -23,6 +24,7 @@ import es.refil.presentation.auth.registration.RegistrationScreen
 import es.refil.presentation.codeQR.QrScreen
 import es.refil.presentation.codeQR.QrViewModel
 import es.refil.presentation.profile.ProfileScreen
+import es.refil.presentation.user_detail.UserDetailViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,7 +33,7 @@ import kotlinx.coroutines.launch
 @ExperimentalAnimationApi
 @Composable
 fun AppNavHost(
-    authViewModel: AuthViewModel, qrViewModel: QrViewModel?,
+    authViewModel: AuthViewModel, qrViewModel: QrViewModel?, userDetailViewModel: UserDetailViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberAnimatedNavController(),
     startDestination: String = Destinations.Login.route
@@ -183,6 +185,7 @@ fun AppNavHost(
                 onDismissDialog = authViewModel::hideRegisterErrorDialog,
                 state = state,
                 onSignInClick = {
+
                     //LifecycleScope variant
                     val scope = CoroutineScope(Dispatchers.Main)
                     scope.launch {
@@ -196,6 +199,7 @@ fun AppNavHost(
                     }
 
                 }
+
             )
 
         }
@@ -205,8 +209,10 @@ fun AppNavHost(
             arguments = Destinations.Profile.arguments
 
         ) {
+
             ProfileScreen(
                 authViewModel,
+                userDetailViewModel,
                 navController,
                 userData = googleAuthUiClient.getSignedInUser(),
                 onSignOut = {
@@ -217,7 +223,7 @@ fun AppNavHost(
 
                         navController.popBackStack()
                     }
-                }
+                },
             )
 
         }

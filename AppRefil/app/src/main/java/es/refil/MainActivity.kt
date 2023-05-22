@@ -14,6 +14,7 @@ import es.refil.presentation.auth.AuthViewModel
 import es.refil.presentation.auth.registration.GoogleAuthUiClient
 import es.refil.presentation.codeQR.QrViewModel
 import es.refil.presentation.mainMarket.MainMarketViewModel
+import es.refil.presentation.user_detail.UserDetailViewModel
 import es.refil.ui.theme.AppRefilTheme
 
 @ExperimentalAnimationApi
@@ -25,6 +26,7 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel by viewModels<AuthViewModel>()
     private val qrViewModel by viewModels<QrViewModel>()
+    private val userViewModel by viewModels<UserDetailViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +36,7 @@ class MainActivity : ComponentActivity() {
             AppRefilTheme {
                         BoxWithConstraints {
 
-                            AppNavHost(viewModel, qrViewModel)
+                            AppNavHost(viewModel, qrViewModel, userViewModel)
 
                         }
             }
