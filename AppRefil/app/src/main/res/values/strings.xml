@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">AppRefill</string>
+    <string name="web_client_id">128121858942-or7evmfoh25q4mt6gghsdsu5nis6j2mj.apps.googleusercontent.com</string>
+
 
     <!-- https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/src/main/res/values/strings.xml -->
     <string name="error_input_empty">The fields must not be empty</string>

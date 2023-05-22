@@ -63,7 +63,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
 
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
 
     //Constraint Layout
@@ -108,6 +108,7 @@ dependencies {
     def hilt_navigation = "1.1.0-alpha01"
     implementation "com.google.dagger:hilt-android:2.45"
     kapt "com.google.dagger:hilt-android-compiler:2.45"
+    kapt "androidx.hilt:hilt-compiler:1.0.0"
     //implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_viewModel"
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_navigation"
 
@@ -116,6 +117,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
+
+    //Download image remote for profile pictures in Profile
+    implementation"io.coil-kt:coil-compose:2.2.2"
 
     //Added from https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/build.gradle
     // Kotlin Coroutines ↓
@@ -131,6 +135,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.0.0')
     //Authentication
     implementation "com.google.firebase:firebase-auth-ktx"
+    implementation"com.google.android.gms:play-services-auth:20.5.0"
     //Cloud Firestore
     implementation "com.google.firebase:firebase-firestore-ktx"
     // SDK cliente de Cloud Functions para Firebase
