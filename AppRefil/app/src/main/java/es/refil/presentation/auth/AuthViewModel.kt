@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import es.refil.data.network.auth.AuthRepository
 import es.refil.data.Resource
+import es.refil.data.network.auth.AuthRepositoryImpl
 import es.refil.presentation.auth.login.LoginStateData
 import es.refil.presentation.auth.registration.RegisterStateData
 import kotlinx.coroutines.delay
@@ -20,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepositoryImpl
 ) : ViewModel() {
 
     val loginState: MutableState<LoginStateData> = mutableStateOf(LoginStateData())
@@ -39,8 +40,8 @@ class AuthViewModel @Inject constructor(
 
     //If we are already logged in, we don't need to do anything
     init {
-        if (authRepository.currentUser != null) {
-            _loginFlow.value = Resource.Success(authRepository.currentUser!!)
+        if (currentUser != null) {
+            _loginFlow.value = Resource.Success(currentUser!!)
         }
     }
 

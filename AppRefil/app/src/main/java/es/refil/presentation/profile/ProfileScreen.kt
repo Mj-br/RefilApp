@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import es.refil.R
@@ -29,7 +30,9 @@ import es.refil.ui.theme.spacing
 
 
 @Composable
-fun ProfileScreen(viewModel: AuthViewModel?, navController: NavHostController) {
+fun ProfileScreen(
+    viewModel: AuthViewModel? = hiltViewModel(),
+    navController: NavHostController) {
     val spacing = MaterialTheme.spacing
     Column(
         modifier = Modifier
