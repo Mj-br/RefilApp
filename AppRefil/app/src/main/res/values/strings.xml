@@ -12,6 +12,7 @@
     <string name="error_password_too_short">Password too short</string>
     <string name="success_registration">Successfully registered new user</string>
     <string name="success_login">Successfully logged in</string>
+    <string name="error_login">User do not exist\n Please sign up</string>
     <string name="error_unknown">An unknown error occurred</string>
     <string name="email">Email</string>
     <string name="password">password</string>

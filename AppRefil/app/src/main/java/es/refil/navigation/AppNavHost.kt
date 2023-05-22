@@ -72,7 +72,8 @@ fun AppNavHost(
                 },
                 onDismissDialog = {
                     authViewModel.hideLoginErrorDialog()
-                }
+                },
+                state = loginState
             )
         }
 

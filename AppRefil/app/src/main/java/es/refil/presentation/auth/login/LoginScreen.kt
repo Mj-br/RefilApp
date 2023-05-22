@@ -1,5 +1,6 @@
 package es.refil.presentation.auth.login
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -46,10 +48,14 @@ fun LoginScreen(
     viewModel: AuthViewModel? = hiltViewModel(),
     navController: NavController,
     onNavigateToRegister: () -> Unit,
-    onDismissDialog: () -> Unit
+    onDismissDialog: () -> Unit,
+    state: LoginStateData
 ) {
 
     //Todo: We can change this later to do a good Clean Architecture
+
+    //Error handling
+    val context = LocalContext.current
 
     val emailValue = rememberSaveable { mutableStateOf("") }
     val passwordValue = rememberSaveable { mutableStateOf("") }
@@ -57,7 +63,7 @@ fun LoginScreen(
     val focusManager = LocalFocusManager.current
 
     val loginFlow = viewModel?.loginFlow?.collectAsState()
-    val state = viewModel?.loginState
+    val stateText = viewModel?.loginState
 
     //Header
     Box(
@@ -250,9 +256,9 @@ fun LoginScreen(
 
         }
 
-        if (state?.value?.errorMessage != null) {
+        if (stateText?.value?.errorMessage != null) {
             EventDialog(
-                errorMessage = state.value.errorMessage!!,
+                errorMessage = stateText.value.errorMessage!!,
                 onDismiss = onDismissDialog
             )
         }
@@ -261,14 +267,22 @@ fun LoginScreen(
         loginFlow?.value?.let {
             when (it) {
                 is Resource.Failure<*> -> {
+                    LaunchedEffect(key1 = state.signInError ){
 
-                    //Toast.makeText(LocalContext.current, it.exception.message, Toast.LENGTH_SHORT).show()
-                    if (state?.value?.errorMessage != null) {
+                        Toast.makeText(
+                            context,
+                            R.string.error_login,
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                    }
+
+                    /*if (state?.value?.errorMessage != null) {
                         EventDialog(
                             errorMessage = state.value.errorMessage!!,
                             onDismiss = onDismissDialog
                         )
-                    }
+                    }*/
 
                 }
                 Resource.Loading -> {

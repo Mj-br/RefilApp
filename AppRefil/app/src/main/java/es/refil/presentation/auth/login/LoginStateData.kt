@@ -9,5 +9,6 @@ data class LoginStateData(
     val password: String = "",
     val successLogin: Boolean = false,
     val displayProgressBar: Boolean = false,
-    @StringRes val errorMessage: Int? = null
+    @StringRes val errorMessage: Int? = null,
+    val signInError: String? = null
 )

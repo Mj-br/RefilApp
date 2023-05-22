@@ -15,8 +15,11 @@ import es.refil.data.Resource
 import es.refil.data.network.auth.AuthRepositoryImpl
 import es.refil.presentation.auth.login.LoginStateData
 import es.refil.presentation.auth.registration.RegisterStateData
+import es.refil.presentation.auth.registration.SignInResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,6 +39,29 @@ class AuthViewModel @Inject constructor(
     val currentUser: FirebaseUser?
         get() = authRepository.currentUser
 
+    //region Google SigIn
+
+
+
+    private val _state = MutableStateFlow(RegisterStateData())
+    val state = _state.asStateFlow()
+
+    fun onSignInResult(result: SignInResult) {
+        _state.update {
+            it.copy(
+                isSignInSuccesful = result.data != null,
+                signInError = result.errorMessage
+            )
+        }
+    }
+
+    fun resetState() {
+        _state.update { RegisterStateData() }
+    }
+
+    //endregion
+
+
     //region Login and Signup functions
 
     //If we are already logged in, we don't need to do anything
@@ -46,7 +72,7 @@ class AuthViewModel @Inject constructor(
     }
 
     //If we are not logged in, we need to do Login
-    fun login(email:String, password:String) {
+    fun login(email: String, password: String) {
 
         val errorMessage = inputLoginError(email, password)
 
@@ -71,9 +97,6 @@ class AuthViewModel @Inject constructor(
 
         }
     }
-
-
-
 
 
     //If we do not have an account, we need to do Signup
@@ -110,6 +133,7 @@ class AuthViewModel @Inject constructor(
             errorMessage = null
         )
     }
+
     fun hideRegisterErrorDialog() {
         registerState.value = registerState.value.copy(
             errorMessage = null
