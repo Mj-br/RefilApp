@@ -15,13 +15,14 @@
     <string name="error_login">User do not exist\n Please sign up</string>
     <string name="error_unknown">An unknown error occurred</string>
     <string name="email">Email</string>
+    <string name="points">Points</string>
     <string name="password">password</string>
     <string name="login">login</string>
     <string name="name">Name</string>
     <string name="signup">signup</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="empty" />
-    <string name="logout">Logout</string>
+    <string name="logout">Sign out</string>
 
 
 </resources>

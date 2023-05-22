@@ -1,6 +1,7 @@
 package es.refil.navigation
 
 import android.app.Activity.RESULT_OK
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -9,6 +10,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -140,6 +142,12 @@ fun AppNavHost(
             //Google entry
             val state by authViewModel.signInState.collectAsState()
 
+            LaunchedEffect(key1 = Unit){
+                if (googleAuthUiClient.getSignedInUser() != null) {
+                    navController.navigate(Destinations.Profile.route)
+                }
+            }
+
             val launcher = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.StartIntentSenderForResult(),
                 onResult = { result ->
@@ -155,6 +163,15 @@ fun AppNavHost(
                     }
                 }
             )
+
+            LaunchedEffect(key1 = state.isSignInSuccesful) {
+                if (state.isSignInSuccesful) {
+                    Toast.makeText(context, "Sign in successful", Toast.LENGTH_LONG).show()
+
+                    navController.navigate(Destinations.Profile.route)
+                    authViewModel.resetState()
+                }
+            }
 
             //We pass all we need to the RegisterScreen, before this we create parameters to the RegisterScreen
             RegistrationScreen(
@@ -188,7 +205,20 @@ fun AppNavHost(
             arguments = Destinations.Profile.arguments
 
         ) {
-            ProfileScreen(authViewModel, navController)
+            ProfileScreen(
+                authViewModel,
+                navController,
+                userData = googleAuthUiClient.getSignedInUser(),
+                onSignOut = {
+                    val scope = CoroutineScope(Dispatchers.Main)
+                    scope.launch {
+                        googleAuthUiClient.signOut()
+                        Toast.makeText(context, "Signed out", Toast.LENGTH_LONG).show()
+
+                        navController.popBackStack()
+                    }
+                }
+            )
 
         }
 

@@ -1,6 +1,7 @@
 package es.refil.presentation.profile
 
 import android.content.res.Configuration
+import android.service.autofill.UserData
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -17,11 +18,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import es.refil.R
 import es.refil.navigation.Destinations
 import es.refil.presentation.auth.AuthViewModel
@@ -32,15 +37,19 @@ import es.refil.ui.theme.spacing
 @Composable
 fun ProfileScreen(
     viewModel: AuthViewModel? = hiltViewModel(),
-    navController: NavHostController) {
+    navController: NavHostController,
+    userData: es.refil.presentation.auth.registration.UserData?,
+    onSignOut: () -> Unit) {
     val spacing = MaterialTheme.spacing
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(spacing.medium)
             .padding(top = spacing.extraLarge),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
 
         Text(
@@ -49,22 +58,48 @@ fun ProfileScreen(
             color = MaterialTheme.colorScheme.onSurface
         )
 
-        Text(
-            text = viewModel?.currentUser?.displayName ?: "",
-            style = MaterialTheme.typography.displaySmall,
-            color = MaterialTheme.colorScheme.onSurface
-        )
+        //User profile picture from Google
+        if (userData?.profilePictureUrl != null) {
+            AsyncImage(
+                model = userData.profilePictureUrl,
+                contentDescription = "Profile picture",
+                modifier = Modifier
+                    .size(150.dp)
+                    .clip(CircleShape),
+            contentScale = ContentScale.Crop
+            )
+        }else{
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "Login_Image",
+                contentScale = ContentScale.Inside,
+                modifier = Modifier
+                    .clip(
+                        CircleShape
+                    )
+                    .size(150.dp)
+            )
+        }
 
-        Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "Login_Image",
-            contentScale = ContentScale.Inside,
-            modifier = Modifier
-                .clip(
-                    CircleShape
-                )
-                .size(150.dp)
-        )
+        if (userData?.name != null) {
+            Text(
+                text = userData.name,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.displaySmall,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 36.sp,
+                color = MaterialTheme.colorScheme.onSurface
+
+            )
+        }else{
+            Text(
+                text = viewModel?.currentUser?.displayName ?: "",
+                style = MaterialTheme.typography.displaySmall,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+        }
+
 
         Column(
             modifier = Modifier
@@ -112,6 +147,30 @@ fun ProfileScreen(
                 )
             }
 
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ){
+
+                Text(
+                    text = stringResource(id = R.string.points),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.weight(0.3f),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+
+                if (userData?.points != null) {
+                    Text(
+                        text = userData.points.toString(),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.weight(0.3f),
+                        color = MaterialTheme.colorScheme.onSurface
+
+                    )
+                }
+            }
+
             Button(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -140,14 +199,14 @@ fun ProfileScreen(
 
 
             Button(
-                onClick = {
+                onClick = onSignOut /*{
                     viewModel?.logout()
                     navController.navigate(Destinations.Login.route) {
                         popUpTo(Destinations.Profile.route) {
                             inclusive = true
                         }
                     }
-                },
+                }*/,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = spacing.extraLarge),
@@ -165,7 +224,15 @@ fun ProfileScreen(
 @Composable
 fun HomeScreenPreviewLight() {
     AppRefilTheme {
-        ProfileScreen(null, rememberNavController())
+        ProfileScreen(null, rememberNavController(),
+            es.refil.presentation.auth.registration.UserData(
+                "51545645645",
+                "prueba@mail.com",
+                "pepito",
+                0,
+                ""
+            )
+        ) {}
     }
 }
 
@@ -173,6 +240,14 @@ fun HomeScreenPreviewLight() {
 @Composable
 fun HomeScreenPreviewDark() {
     AppRefilTheme {
-        ProfileScreen(null, rememberNavController())
+        ProfileScreen(null, rememberNavController(),
+            es.refil.presentation.auth.registration.UserData(
+                "51545645645",
+                "prueba@mail.com",
+                "pepito",
+                0,
+                ""
+            ),
+        ) {}
     }
 }
