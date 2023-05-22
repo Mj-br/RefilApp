@@ -22,8 +22,9 @@ class GoogleAuthUiClient @Inject constructor(
     private val context: Context,
     //The oneTapClient show us the dialog to sign in
     private val oneTapClient: SignInClient,
-    private val auth: FirebaseAuth
     ) {
+
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
 
     @OptIn(ExperimentalCoroutinesApi::class)

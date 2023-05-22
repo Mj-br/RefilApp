@@ -10,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import es.refil.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import es.refil.data.network.auth.AuthRepository
 import es.refil.data.Resource
 import es.refil.data.network.auth.AuthRepositoryImpl
 import es.refil.presentation.auth.login.LoginStateData
@@ -41,13 +40,14 @@ class AuthViewModel @Inject constructor(
 
     //region Google SigIn
 
+    private val _logState = MutableStateFlow(LoginStateData())
+    val logState = _logState.asStateFlow()
 
-
-    private val _state = MutableStateFlow(RegisterStateData())
-    val state = _state.asStateFlow()
+    private val _signInState = MutableStateFlow(RegisterStateData())
+    val signInState = _signInState.asStateFlow()
 
     fun onSignInResult(result: SignInResult) {
-        _state.update {
+        _signInState.update {
             it.copy(
                 isSignInSuccesful = result.data != null,
                 signInError = result.errorMessage
@@ -56,7 +56,7 @@ class AuthViewModel @Inject constructor(
     }
 
     fun resetState() {
-        _state.update { RegisterStateData() }
+        _signInState.update { RegisterStateData() }
     }
 
     //endregion

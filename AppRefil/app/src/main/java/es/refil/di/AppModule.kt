@@ -28,4 +28,6 @@ object AppModule {
     fun provideQrRepository(impl: QrRepositoryImpl): QrRepository = impl
 
 
+
+
 }

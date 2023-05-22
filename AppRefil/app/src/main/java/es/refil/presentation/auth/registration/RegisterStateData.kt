@@ -8,4 +8,5 @@ data class RegisterStateData(
     @StringRes val errorMessage: Int? = null,
     val signInError: String? = null
 
+
 )

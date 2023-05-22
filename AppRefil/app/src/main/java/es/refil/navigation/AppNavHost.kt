@@ -1,19 +1,29 @@
 package es.refil.navigation
 
+import android.app.Activity.RESULT_OK
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.android.gms.auth.api.identity.Identity
 import es.refil.presentation.auth.AuthViewModel
 import es.refil.presentation.auth.login.LoginScreen
+import es.refil.presentation.auth.registration.GoogleAuthUiClient
 import es.refil.presentation.auth.registration.RegistrationScreen
 import es.refil.presentation.codeQR.QrScreen
 import es.refil.presentation.codeQR.QrViewModel
 import es.refil.presentation.profile.ProfileScreen
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @ExperimentalAnimationApi
@@ -24,11 +34,24 @@ fun AppNavHost(
     navController: NavHostController = rememberAnimatedNavController(),
     startDestination: String = Destinations.Login.route
 ) {
+
+    val context = LocalContext.current
+    val googleAuthUiClient by remember(context) {
+        mutableStateOf(
+            GoogleAuthUiClient(
+                context = context,
+                oneTapClient = Identity.getSignInClient(context)
+            )
+        )
+    }
+
     AnimatedNavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
     ) {
+
+
         composable(
             route = Destinations.Login.route,
             enterTransition = {
@@ -73,7 +96,8 @@ fun AppNavHost(
                 onDismissDialog = {
                     authViewModel.hideLoginErrorDialog()
                 },
-                state = loginState
+                state = authViewModel.loginState.value
+
             )
         }
 
@@ -112,6 +136,26 @@ fun AppNavHost(
             }
 
         ) {
+
+            //Google entry
+            val state by authViewModel.signInState.collectAsState()
+
+            val launcher = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.StartIntentSenderForResult(),
+                onResult = { result ->
+                    if (result.resultCode == RESULT_OK) {
+                        val scope = CoroutineScope(Dispatchers.Main)
+                        scope.launch {
+                            val signInResult = googleAuthUiClient.signInWithIntent(
+                                intent = result.data ?: return@launch
+                            )
+                            authViewModel.onSignInResult(signInResult)
+                        }
+
+                    }
+                }
+            )
+
             //We pass all we need to the RegisterScreen, before this we create parameters to the RegisterScreen
             RegistrationScreen(
                 navController = navController,
@@ -119,7 +163,22 @@ fun AppNavHost(
                 onBack = {
                     navController.popBackStack()
                 },
-                onDismissDialog = authViewModel::hideRegisterErrorDialog
+                onDismissDialog = authViewModel::hideRegisterErrorDialog,
+                state = state,
+                onSignInClick = {
+                    //LifecycleScope variant
+                    val scope = CoroutineScope(Dispatchers.Main)
+                    scope.launch {
+                        val signInIntentSender = googleAuthUiClient.signIn()
+                        launcher.launch(
+                            IntentSenderRequest.Builder(
+                                signInIntentSender ?: return@launch
+                            ).build()
+                        )
+
+                    }
+
+                }
             )
 
         }
@@ -155,6 +214,9 @@ fun AppNavHost(
     }
 
 
+
 }
+
+
 
 

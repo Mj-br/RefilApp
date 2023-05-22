@@ -1,5 +1,6 @@
 package es.refil.presentation.auth.registration
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
@@ -18,6 +19,7 @@ import es.refil.presentation.components.TransparentTextField
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -30,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
+import es.refil.R
 import es.refil.data.Resource
 import es.refil.navigation.Destinations
 import es.refil.presentation.auth.AuthViewModel
@@ -43,7 +46,9 @@ fun RegistrationScreen(
     navController: NavController,
     viewModel: AuthViewModel?,
     onBack: () -> Unit,
-    onDismissDialog: () -> Unit
+    onDismissDialog: () -> Unit,
+    state: RegisterStateData,
+    onSignInClick: () -> Unit
 
 ) {
 
@@ -54,8 +59,9 @@ fun RegistrationScreen(
     var confirmPasswordVisibility by remember { mutableStateOf(false) }
 
     val signupFlow = viewModel?.signupFlow?.collectAsState()
-    val state = viewModel?.registerState
+    val stateText = viewModel?.registerState
 
+    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
 
     Box(
@@ -253,7 +259,7 @@ fun RegistrationScreen(
             ) {
                 SocialMediaButton(
                     text = "Login with Google" ,
-                    onClick = {/*"TODO:("LOGIN WITH GOOGLE, WE CAN PASS THE VIEWMODEL HERE")*/},
+                    onClick = onSignInClick,
                     socialMediaColor = GMAILCOLOR
                 )
 
@@ -264,20 +270,21 @@ fun RegistrationScreen(
         }
     }
 
-    if (state?.value?.errorMessage != null){
-        EventDialog(errorMessage = state.value.errorMessage!!, onDismiss = onDismissDialog)
+    if (stateText?.value?.errorMessage != null){
+        EventDialog(errorMessage = stateText.value.errorMessage!!, onDismiss = onDismissDialog)
     }
 
     signupFlow?.value?.let {
         when (it) {
             is Resource.Failure<*> -> {
+                LaunchedEffect(key1 = state.signInError ){
 
-                //Toast.makeText(LocalContext.current, it.exception.message, Toast.LENGTH_SHORT).show()
-                if (state?.value?.errorMessage != null) {
-                    EventDialog(
-                        errorMessage = state.value.errorMessage!!,
-                        onDismiss = onDismissDialog
-                    )
+                    Toast.makeText(
+                        context,
+                        R.string.error_login,
+                        Toast.LENGTH_LONG
+                    ).show()
+
                 }
 
             }
