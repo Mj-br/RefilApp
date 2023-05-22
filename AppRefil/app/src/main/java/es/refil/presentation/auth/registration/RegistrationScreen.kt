@@ -71,9 +71,8 @@ fun RegistrationScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                .verticalScroll(rememberScrollState())
+
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically

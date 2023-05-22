@@ -1,6 +1,7 @@
 package es.refil.di
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,11 +22,21 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideFirestoreInstance() = FirebaseFirestore.getInstance()
+
+    @Singleton
+    @Provides
     fun provideAuthRepository(impl: AuthRepositoryImpl): AuthRepository = impl
 
     @Singleton
     @Provides
     fun provideQrRepository(impl: QrRepositoryImpl): QrRepository = impl
+
+    @Singleton
+    @Provides
+    fun provideUserList(
+        firestore: FirebaseFirestore
+    ) = firestore.collection("users")
 
 
 

@@ -39,7 +39,8 @@ fun ProfileScreen(
     viewModel: AuthViewModel? = hiltViewModel(),
     navController: NavHostController,
     userData: es.refil.presentation.auth.registration.UserData?,
-    onSignOut: () -> Unit) {
+    onSignOut: () -> Unit
+) {
     val spacing = MaterialTheme.spacing
 
     Column(
@@ -66,9 +67,9 @@ fun ProfileScreen(
                 modifier = Modifier
                     .size(150.dp)
                     .clip(CircleShape),
-            contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop
             )
-        }else{
+        } else {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Login_Image",
@@ -91,7 +92,7 @@ fun ProfileScreen(
                 color = MaterialTheme.colorScheme.onSurface
 
             )
-        }else{
+        } else {
             Text(
                 text = viewModel?.currentUser?.displayName ?: "",
                 style = MaterialTheme.typography.displaySmall,
@@ -151,7 +152,7 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-            ){
+            ) {
 
                 Text(
                     text = stringResource(id = R.string.points),
@@ -199,14 +200,14 @@ fun ProfileScreen(
 
 
             Button(
-                onClick = onSignOut /*{
+                onClick =/* onSignOut*/ {
                     viewModel?.logout()
                     navController.navigate(Destinations.Login.route) {
                         popUpTo(Destinations.Profile.route) {
                             inclusive = true
                         }
                     }
-                }*/,
+                },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = spacing.extraLarge),
@@ -224,7 +225,8 @@ fun ProfileScreen(
 @Composable
 fun HomeScreenPreviewLight() {
     AppRefilTheme {
-        ProfileScreen(null, rememberNavController(),
+        ProfileScreen(
+            null, rememberNavController(),
             es.refil.presentation.auth.registration.UserData(
                 "51545645645",
                 "prueba@mail.com",
@@ -240,7 +242,8 @@ fun HomeScreenPreviewLight() {
 @Composable
 fun HomeScreenPreviewDark() {
     AppRefilTheme {
-        ProfileScreen(null, rememberNavController(),
+        ProfileScreen(
+            null, rememberNavController(),
             es.refil.presentation.auth.registration.UserData(
                 "51545645645",
                 "prueba@mail.com",
