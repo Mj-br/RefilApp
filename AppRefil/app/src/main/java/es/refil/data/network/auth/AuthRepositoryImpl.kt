@@ -33,12 +33,9 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signUp(email: String, password: String): Resource<FirebaseUser> {
+    override suspend fun signUp(email: String, password: String): Resource<User> {
         return try {
             val user = firebaseAuth.createUserWithEmailAndPassword(email, password).await()?.user
-
-
-
 
             // Actualizar el perfil del usuario con el nombre
             user?.updateProfile(UserProfileChangeRequest.Builder().setDisplayName(email.split("@")[0]).build())?.await()
@@ -55,7 +52,7 @@ class AuthRepositoryImpl @Inject constructor(
 
 
             //TODO: (ERROR) AQUI NO SE LE ESTA MANDANDO EL NEW USER
-            Resource.Success(user!!)
+            Resource.Success(newUser)
 
         } catch (e: Exception) {
             e.printStackTrace()
