@@ -76,24 +76,6 @@ class AuthViewModel @Inject constructor(
     init {
         if (currentUser != null) {
             _loginFlow.value = Resource.Success(currentUser!!)
-        }else{
-            // Perform login if not already logged in
-            viewModelScope.launch {
-                val result = authRepository.login("", "")
-                _loginFlow.value = result
-
-                if (result is Resource.Success) {
-                    val user = User(
-                        uid = result.result.uid, // Reemplaza los valores por defecto según corresponda
-                        email = result.result.email,
-                        name = "",
-                        points = 0,
-                        bottles = 0
-                    )
-
-                    _state.value = RegisterStateData(user = user)
-                }
-            }
         }
     }
 
