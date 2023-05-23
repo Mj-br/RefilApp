@@ -5,11 +5,10 @@ data class SignInResult (
     val errorMessage: String?
 )
 data class User(
-    val uid: String,
-    val email: String?,
-    val name: String?,
-    val points: Int,
-    val bottles: Int
-) {
-    constructor() : this("", "", "", 0, 0)
-}
+    val uid: String = "",
+    val email: String? = "",
+    val name: String? = "",
+    val points: Int = 0,
+    val bottles: Int = 0,
+    val favorites: List<String> = emptyList()
+)

@@ -12,6 +12,7 @@ import es.refil.R
 import es.refil.data.models.SignInResult
 import es.refil.data.models.User
 import es.refil.data.network.await
+import es.refil.repositories.UserRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -23,7 +24,7 @@ import javax.inject.Inject
 class GoogleAuthUiClient @Inject constructor(
     private val context: Context,
     //The oneTapClient show us the dialog to sign in
-    private val oneTapClient: SignInClient
+    private val oneTapClient: SignInClient,
     ) {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -53,17 +54,23 @@ class GoogleAuthUiClient @Inject constructor(
             val user = auth.signInWithCredential(googleCredentials).await().user
             SignInResult(
                 data = user?.run {
+
+
                     User(
                         uid = uid,
                         email = email,
                         name = displayName,
                         points = 0, // TODO: (POINTS DATA) CHANGE IF OVERWRITES OTHER POINTS
-                        bottles = 0
+                        bottles = 0,
+                        favorites = emptyList()
+
 
                     )
+
                 },
                 errorMessage = null
             )
+
 
         } catch (e: Exception){
             e.printStackTrace()
