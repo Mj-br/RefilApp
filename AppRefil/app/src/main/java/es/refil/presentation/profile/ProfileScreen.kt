@@ -43,7 +43,7 @@ fun ProfileScreen(
 ) {
     val spacing = MaterialTheme.spacing
 
-    val userState = viewModel?.state?.collectAsState()
+    val getData = userViewModel.state.collectAsState()
 
 
     Column(
@@ -153,7 +153,7 @@ fun ProfileScreen(
                 )
 
                 Text(
-                    text = userState?.value?.user?.points.toString(),
+                    text = getData.value.points.toString(),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.weight(0.3f),
                     color = MaterialTheme.colorScheme.onSurface
@@ -173,7 +173,7 @@ fun ProfileScreen(
             )
 
                 Text(
-                    text = userState?.value?.user?.bottles.toString(),
+                    text = getData.value.bottles.toString(),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.weight(0.3f),
                     color = MaterialTheme.colorScheme.onSurface

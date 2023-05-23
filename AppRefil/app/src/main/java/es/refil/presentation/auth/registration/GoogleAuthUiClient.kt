@@ -30,6 +30,7 @@ class GoogleAuthUiClient @Inject constructor(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
 
+
     @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun signIn(): IntentSender? {
         val result = try {
@@ -55,7 +56,6 @@ class GoogleAuthUiClient @Inject constructor(
             SignInResult(
                 data = user?.run {
 
-
                     User(
                         uid = uid,
                         email = email,
@@ -63,11 +63,9 @@ class GoogleAuthUiClient @Inject constructor(
                         points = 0, // TODO: (POINTS DATA) CHANGE IF OVERWRITES OTHER POINTS
                         bottles = 0,
                         favorites = emptyList()
-
-
                     )
-
                 },
+
                 errorMessage = null
             )
 

@@ -41,16 +41,7 @@ class AuthRepositoryImpl @Inject constructor(
             user?.updateProfile(UserProfileChangeRequest.Builder().setDisplayName(email.split("@")[0]).build())?.await()
 
             // Crear un nuevo usuario en Firestore
-            val newUser = User(
-                uid = user?.uid ?: "",
-                email = user?.email,
-                name = user?.displayName,
-                points = 0,
-                bottles = 0,
-                favorites = emptyList()
-
-            )
-            userRepository.addNewUser(newUser)
+            createNewFireStoreUser(user)
 
 
             //TODO: (ERROR) AQUI NO SE LE ESTA MANDANDO EL NEW USER
@@ -63,6 +54,19 @@ class AuthRepositoryImpl @Inject constructor(
         }
 
 
+    }
+
+    private fun createNewFireStoreUser(user: FirebaseUser?) {
+        val newUser = User(
+            uid = user?.uid ?: "",
+            email = user?.email,
+            name = user?.displayName,
+            points = 0,
+            bottles = 0,
+            favorites = emptyList()
+
+        )
+        userRepository.addNewUser(newUser)
     }
 
 
