@@ -188,8 +188,6 @@ fun RegistrationScreen(
                             confirmPasswordValue.value
                         )
 
-                        Toast.makeText(context, "Sign up successful", Toast.LENGTH_SHORT).show()
-
                     }
                 }
 
@@ -285,7 +283,7 @@ fun RegistrationScreen(
 
                     Toast.makeText(
                         context,
-                        R.string.error_login,
+                        R.string.error_sign_up,
                         Toast.LENGTH_LONG
                     ).show()
 
@@ -314,6 +312,13 @@ fun RegistrationScreen(
                     navController.navigate(
                         Destinations.Profile.route
                     ) {
+
+                        Toast.makeText(
+                            context,
+                            R.string.success_registration,
+                            Toast.LENGTH_LONG
+                        ).show()
+
                         //TODO: ChANGE THIS TO NAVIGATE TO MARKET SCREEN
                         popUpTo(Destinations.Profile.route) { inclusive = true }
                     }

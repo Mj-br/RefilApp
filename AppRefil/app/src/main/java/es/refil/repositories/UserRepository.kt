@@ -16,7 +16,7 @@ class UserRepository @Inject constructor(
 
     fun addNewUser(user: User){
         try {
-            userList.document(user.uuid).set(user)
+            userList.document(user.uid).set(user)
         } catch (e: Exception) {
             e.printStackTrace()
 

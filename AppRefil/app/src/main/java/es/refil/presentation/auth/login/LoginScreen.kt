@@ -35,6 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import es.refil.R
 import es.refil.data.Resource
 import es.refil.navigation.Destinations
@@ -197,7 +199,6 @@ fun LoginScreen(
                                     //enabledButton = { viewModel?.enableLogin(emailValue.value, passwordValue.value) },
                                     displayProgressBar = loginFlow?.value == Resource.Loading
                                 ) {
-                                    //We pass values to LOGIN
                                     viewModel?.login(emailValue.value, passwordValue.value)
                                 }
 
@@ -264,10 +265,12 @@ fun LoginScreen(
         }
 
 
-        loginFlow?.value?.let {
-            when (it) {
+        loginFlow?.value?.let { resource ->
+            when (resource) {
                 is Resource.Failure<*> -> {
-                    LaunchedEffect(key1 = state.signInError ){
+
+
+                    /*LaunchedEffect(key1 = state.signInError ){
 
                         Toast.makeText(
                             context,
@@ -275,14 +278,22 @@ fun LoginScreen(
                             Toast.LENGTH_LONG
                         ).show()
 
-                    }
-
-                    /*if (state?.value?.errorMessage != null) {
-                        EventDialog(
-                            errorMessage = state.value.errorMessage!!,
-                            onDismiss = onDismissDialog
-                        )
                     }*/
+
+                    //TODO: Implement login verification. PROBLEM: The toast is visualized repeatedly
+                    /*val exception = resource.exception
+                    viewModel.showErrorMessage(exception)
+
+                    val errorMessage = viewModel.loginState.value.signInError
+                    errorMessage?.let {
+                        Toast.makeText(
+                            context,
+                            errorMessage,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+*/
+
 
                 }
                 Resource.Loading -> {

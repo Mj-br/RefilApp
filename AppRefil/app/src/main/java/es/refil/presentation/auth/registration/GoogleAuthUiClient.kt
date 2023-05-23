@@ -23,7 +23,7 @@ import javax.inject.Inject
 class GoogleAuthUiClient @Inject constructor(
     private val context: Context,
     //The oneTapClient show us the dialog to sign in
-    private val oneTapClient: SignInClient,
+    private val oneTapClient: SignInClient
     ) {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -54,7 +54,7 @@ class GoogleAuthUiClient @Inject constructor(
             SignInResult(
                 data = user?.run {
                     User(
-                        uuid = uid,
+                        uid = uid,
                         email = email,
                         name = displayName,
                         points = 0, // TODO: (POINTS DATA) CHANGE IF OVERWRITES OTHER POINTS
@@ -91,7 +91,7 @@ class GoogleAuthUiClient @Inject constructor(
 
     fun getSignedInUser():User? = auth.currentUser?.run {
         User(
-            uuid = uid,
+            uid = uid,
             name = displayName, //TODO: (DO THE FUNCTION TO SEPARATE @ FROM NAME)
             email = email,
             points = 0, //TODO: (OVERWRITE TO 0??)

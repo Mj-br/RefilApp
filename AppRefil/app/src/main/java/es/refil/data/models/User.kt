@@ -5,11 +5,11 @@ data class SignInResult (
     val errorMessage: String?
 )
 data class User(
-    val uuid: String,
+    val uid: String,
     val email: String?,
     val name: String?,
     val points: Int,
-    val profilePictureUrl: String?
+    val profilePictureUrl: String? //TODO: QUITAR EL PROFILE PORQUE DIONY PORQUE DIONY LE ROMPE LA APP
 ) {
     constructor() : this("", "", "", 0, "")
 }

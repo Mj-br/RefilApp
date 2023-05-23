@@ -12,7 +12,7 @@
     <string name="error_password_too_short">Password too short</string>
     <string name="success_registration">Successfully registered new user</string>
     <string name="success_login">Successfully logged in</string>
-    <string name="error_login">User do not exist\n Please sign up</string>
+    <string name="error_login">User do not exist</string>
     <string name="error_unknown">An unknown error occurred</string>
     <string name="email">Email</string>
     <string name="points">Points</string>
@@ -23,6 +23,7 @@
     <string name="welcome_back">Welcome Back</string>
     <string name="empty" />
     <string name="logout">Sign out</string>
+    <string name="error_sign_up">User already exist</string>
 
 
 </resources>

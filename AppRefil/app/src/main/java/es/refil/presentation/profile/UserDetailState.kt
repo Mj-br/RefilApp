@@ -1,10 +1,9 @@
-package es.refil.presentation.user_detail
+package es.refil.presentation.profile
 
 import es.refil.data.models.User
 
 data class UserDetailState(
     val isLoading: Boolean = false,
     val user : User? = null,
-    val error : String = "",
-    val points : Int = 0
+    val error : String = ""
 )

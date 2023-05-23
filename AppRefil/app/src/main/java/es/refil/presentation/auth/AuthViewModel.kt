@@ -5,6 +5,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import es.refil.R
@@ -15,6 +17,7 @@ import es.refil.data.network.auth.AuthRepositoryImpl
 import es.refil.presentation.auth.login.LoginStateData
 import es.refil.presentation.auth.registration.RegisterStateData
 import es.refil.data.models.SignInResult
+import es.refil.data.models.User
 import es.refil.repositories.UserRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +33,9 @@ class AuthViewModel @Inject constructor(
 
     val loginState: MutableState<LoginStateData> = mutableStateOf(LoginStateData())
     val registerState: MutableState<RegisterStateData> = mutableStateOf(RegisterStateData())
+
+    private val _state: MutableStateFlow<RegisterStateData> = MutableStateFlow(RegisterStateData())
+    val state: StateFlow<RegisterStateData> = _state.asStateFlow()
 
     private val _loginFlow = MutableStateFlow<Resource<FirebaseUser>?>(null)
     val loginFlow: StateFlow<Resource<FirebaseUser>?> = _loginFlow
@@ -70,6 +76,24 @@ class AuthViewModel @Inject constructor(
     init {
         if (currentUser != null) {
             _loginFlow.value = Resource.Success(currentUser!!)
+        }else{
+            // Perform login if not already logged in
+            viewModelScope.launch {
+                val result = authRepository.login("", "")
+                _loginFlow.value = result
+
+                if (result is Resource.Success) {
+                    val user = User(
+                        uid = result.result.uid, // Reemplaza los valores por defecto según corresponda
+                        email = result.result.email,
+                        name = "",
+                        points = 0,
+                        profilePictureUrl = ""
+                    )
+
+                    _state.value = RegisterStateData(user = user)
+                }
+            }
         }
     }
 
@@ -169,6 +193,40 @@ class AuthViewModel @Inject constructor(
     } else null
 
     //endregion
+
+
+    fun showErrorMessage(exception: Exception) {
+        val errorMessage = when (exception) {
+            is FirebaseAuthInvalidCredentialsException -> {
+                when (exception.errorCode) {
+                    "ERROR_USER_NOT_FOUND" -> {
+                        "User not found"
+                    }
+                    "ERROR_WRONG_PASSWORD" -> {
+                        "Wrong password"
+                    }
+                    else -> {
+                        "Login failed"
+                    }
+                }
+            }
+            is FirebaseAuthInvalidUserException -> {
+                when (exception.errorCode) {
+                    "ERROR_USER_NOT_FOUND" -> {
+                        "User not found"
+                    }
+                    "ERROR_WRONG_PASSWORD" -> {
+                        "Wrong password"
+                    }
+                    else -> {
+                        "Login failed"
+                    }
+                }
+            }
+            else -> "Login failed"
+        }
+        loginState.value = loginState.value.copy(signInError = errorMessage)
+    }
 
 
 

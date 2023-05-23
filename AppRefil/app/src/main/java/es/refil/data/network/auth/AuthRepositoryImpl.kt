@@ -12,8 +12,11 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    //The oneTapClient show us the dialog to sign in
 ) : AuthRepository {
+
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser
@@ -32,15 +35,17 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun signUp(email: String, password: String): Resource<FirebaseUser> {
         return try {
-            val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            val user = result?.user
+            val user = firebaseAuth.createUserWithEmailAndPassword(email, password).await()?.user
+
+
+
 
             // Actualizar el perfil del usuario con el nombre
             user?.updateProfile(UserProfileChangeRequest.Builder().setDisplayName(email.split("@")[0]).build())?.await()
 
             // Crear un nuevo usuario en Firestore
             val newUser = User(
-                uuid = user?.uid ?: "",
+                uid = user?.uid ?: "",
                 email = user?.email,
                 name = user?.displayName,
                 points = 0,
@@ -48,7 +53,10 @@ class AuthRepositoryImpl @Inject constructor(
             )
             userRepository.addNewUser(newUser)
 
+
+            //TODO: (ERROR) AQUI NO SE LE ESTA MANDANDO EL NEW USER
             Resource.Success(user!!)
+
         } catch (e: Exception) {
             e.printStackTrace()
             Resource.Failure<FirebaseUser>(e)
@@ -59,8 +67,10 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
 
-
     override fun logout() {
         firebaseAuth.signOut()
     }
+
+
+
 }

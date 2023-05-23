@@ -9,6 +9,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,7 +30,6 @@ import es.refil.R
 import es.refil.data.models.User
 import es.refil.navigation.Destinations
 import es.refil.presentation.auth.AuthViewModel
-import es.refil.presentation.user_detail.UserDetailViewModel
 import es.refil.ui.theme.spacing
 
 
@@ -40,6 +42,9 @@ fun ProfileScreen(
     onSignOut: () -> Unit
 ) {
     val spacing = MaterialTheme.spacing
+
+    val userState = viewModel?.state?.collectAsState()
+
 
     Column(
         modifier = Modifier
@@ -159,7 +164,7 @@ fun ProfileScreen(
                 )
 
                 Text(
-                    text = userViewModel.state.value.points.toString(),
+                    text = userState?.value?.user?.points.toString(),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.weight(0.3f),
                     color = MaterialTheme.colorScheme.onSurface

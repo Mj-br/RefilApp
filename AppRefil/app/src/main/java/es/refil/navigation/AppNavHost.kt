@@ -22,7 +22,7 @@ import es.refil.presentation.auth.registration.RegistrationScreen
 import es.refil.presentation.codeQR.QrScreen
 import es.refil.presentation.codeQR.QrViewModel
 import es.refil.presentation.profile.ProfileScreen
-import es.refil.presentation.user_detail.UserDetailViewModel
+import es.refil.presentation.profile.UserDetailViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
