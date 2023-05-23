@@ -29,7 +29,7 @@ class UserDetailViewModel
            email = email,
            name = authRepository.currentUser?.displayName,
            points = 0,
-           profilePictureUrl = authRepository.currentUser?.photoUrl?.toString()
+           bottles = 0
        )
         userRepository.addNewUser(user)
     }

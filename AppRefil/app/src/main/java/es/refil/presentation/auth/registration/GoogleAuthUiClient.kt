@@ -58,7 +58,8 @@ class GoogleAuthUiClient @Inject constructor(
                         email = email,
                         name = displayName,
                         points = 0, // TODO: (POINTS DATA) CHANGE IF OVERWRITES OTHER POINTS
-                        profilePictureUrl = photoUrl.toString()
+                        bottles = 0
+
                     )
                 },
                 errorMessage = null
@@ -95,7 +96,7 @@ class GoogleAuthUiClient @Inject constructor(
             name = displayName, //TODO: (DO THE FUNCTION TO SEPARATE @ FROM NAME)
             email = email,
             points = 0, //TODO: (OVERWRITE TO 0??)
-            profilePictureUrl = photoUrl?.toString()
+            bottles = 0
         )
     }
 

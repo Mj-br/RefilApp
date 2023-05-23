@@ -63,27 +63,16 @@ fun ProfileScreen(
         )
 
         //User profile picture from Google
-        if (userData?.profilePictureUrl != null) {
-            AsyncImage(
-                model = userData.profilePictureUrl,
-                contentDescription = "Profile picture",
-                modifier = Modifier
-                    .size(150.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
-            )
-        } else {
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "Login_Image",
-                contentScale = ContentScale.Inside,
-                modifier = Modifier
-                    .clip(
-                        CircleShape
-                    )
-                    .size(150.dp)
-            )
-        }
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "Login_Image",
+            contentScale = ContentScale.Inside,
+            modifier = Modifier
+                .clip(
+                    CircleShape
+                )
+                .size(150.dp)
+        )
 
         if (userData?.name != null) {
             Text(
@@ -169,6 +158,26 @@ fun ProfileScreen(
                     modifier = Modifier.weight(0.3f),
                     color = MaterialTheme.colorScheme.onSurface
                 )
+
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ) {Text(
+                text = "Bottles",
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.weight(0.3f),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+                Text(
+                    text = userState?.value?.user?.bottles.toString(),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.weight(0.3f),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
             }
 
             Button(
@@ -219,6 +228,7 @@ fun ProfileScreen(
         }
     }
 }
+
 
 /*@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable

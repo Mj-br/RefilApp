@@ -88,7 +88,7 @@ class AuthViewModel @Inject constructor(
                         email = result.result.email,
                         name = "",
                         points = 0,
-                        profilePictureUrl = ""
+                        bottles = 0
                     )
 
                     _state.value = RegisterStateData(user = user)

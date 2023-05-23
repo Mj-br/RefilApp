@@ -9,7 +9,7 @@ data class User(
     val email: String?,
     val name: String?,
     val points: Int,
-    val profilePictureUrl: String? //TODO: QUITAR EL PROFILE PORQUE DIONY PORQUE DIONY LE ROMPE LA APP
+    val bottles: Int
 ) {
-    constructor() : this("", "", "", 0, "")
+    constructor() : this("", "", "", 0, 0)
 }
