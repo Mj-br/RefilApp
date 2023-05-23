@@ -24,16 +24,16 @@ class UserRepository @Inject constructor(
 
     }
     @OptIn(ExperimentalCoroutinesApi::class)
-    suspend fun getPoints(userUuid: String): Int {
+    suspend fun getUser(userUuid: String): User? {
         return withContext(Dispatchers.IO) {
             try {
                 val documentSnapshot = userList.document(userUuid).get().await()
-                val user = documentSnapshot.toObject(User::class.java)
-                user?.points ?: 0
+                documentSnapshot.toObject(User::class.java)
             } catch (e: Exception) {
                 e.printStackTrace()
-                0
+                null
             }
         }
     }
 }
+

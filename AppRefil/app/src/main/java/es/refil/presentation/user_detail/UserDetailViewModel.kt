@@ -30,8 +30,9 @@ class UserDetailViewModel
        val user = User(
            uuid = uuid,
            email = email,
-           name = /*authRepository.currentUser?.email?.split("@")?.get(0) ?: "",*/ authRepository.currentUser?.displayName,
-           points = 0
+           name = authRepository.currentUser?.displayName,
+           points = 0,
+           profilePictureUrl = authRepository.currentUser?.photoUrl?.toString()
        )
         userRepository.addNewUser(user)
     }
@@ -40,14 +41,15 @@ class UserDetailViewModel
         viewModelScope.launch {
             try {
                 val userUuid = authRepository.currentUser?.uid ?: ""
-                val points = userRepository.getPoints(userUuid)
-                _state.value = _state.value.copy(points = points)
+                val user = userRepository.getUser(userUuid)
+                _state.value = _state.value.copy(user = user)
             } catch (e: Exception) {
                 e.printStackTrace()
-
             }
         }
     }
+
+
 
 
 

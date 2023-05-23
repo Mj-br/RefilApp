@@ -43,7 +43,8 @@ class AuthRepositoryImpl @Inject constructor(
                 uuid = user?.uid ?: "",
                 email = user?.email,
                 name = user?.displayName,
-                points = 0
+                points = 0,
+                profilePictureUrl = user?.photoUrl.toString()
             )
             userRepository.addNewUser(newUser)
 

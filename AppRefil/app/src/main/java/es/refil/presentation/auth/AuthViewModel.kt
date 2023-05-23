@@ -14,7 +14,7 @@ import es.refil.data.Resource
 import es.refil.data.network.auth.AuthRepositoryImpl
 import es.refil.presentation.auth.login.LoginStateData
 import es.refil.presentation.auth.registration.RegisterStateData
-import es.refil.presentation.auth.registration.SignInResult
+import es.refil.data.models.SignInResult
 import es.refil.repositories.UserRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow

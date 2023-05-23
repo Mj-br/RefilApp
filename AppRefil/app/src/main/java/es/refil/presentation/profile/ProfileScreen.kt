@@ -1,7 +1,5 @@
 package es.refil.presentation.profile
 
-import android.content.res.Configuration
-import android.service.autofill.UserData
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -20,18 +18,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import es.refil.R
+import es.refil.data.models.User
 import es.refil.navigation.Destinations
 import es.refil.presentation.auth.AuthViewModel
 import es.refil.presentation.user_detail.UserDetailViewModel
-import es.refil.ui.theme.AppRefilTheme
 import es.refil.ui.theme.spacing
 
 
@@ -40,11 +36,10 @@ fun ProfileScreen(
     viewModel: AuthViewModel? = hiltViewModel(),
     userViewModel: UserDetailViewModel = hiltViewModel(),
     navController: NavHostController,
-    userData: es.refil.presentation.auth.registration.UserData?,
+    userData: User?,
     onSignOut: () -> Unit
 ) {
     val spacing = MaterialTheme.spacing
-
 
     Column(
         modifier = Modifier
@@ -156,7 +151,6 @@ fun ProfileScreen(
                     .fillMaxWidth()
                     .wrapContentHeight()
             ) {
-
                 Text(
                     text = stringResource(id = R.string.points),
                     style = MaterialTheme.typography.bodyLarge,
@@ -164,15 +158,12 @@ fun ProfileScreen(
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
-                if (userData?.points != null) {
-                    Text(
-                        text = userViewModel.getPoints().toString(),
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.weight(0.3f),
-                        color = MaterialTheme.colorScheme.onSurface
-
-                    )
-                }
+                Text(
+                    text = userViewModel.state.value.points.toString(),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.weight(0.3f),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
             }
 
             Button(

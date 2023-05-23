@@ -9,6 +9,8 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import es.refil.R
+import es.refil.data.models.SignInResult
+import es.refil.data.models.User
 import es.refil.data.network.await
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -51,7 +53,7 @@ class GoogleAuthUiClient @Inject constructor(
             val user = auth.signInWithCredential(googleCredentials).await().user
             SignInResult(
                 data = user?.run {
-                    UserData(
+                    User(
                         uuid = uid,
                         email = email,
                         name = displayName,
@@ -72,6 +74,8 @@ class GoogleAuthUiClient @Inject constructor(
             )
         }
 
+        //TODO: IMPLEMENTAR CREACION DE FIRESTORE CON GOOGLE
+
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -85,8 +89,8 @@ class GoogleAuthUiClient @Inject constructor(
         }
     }
 
-    fun getSignedInUser():UserData? = auth.currentUser?.run {
-        UserData(
+    fun getSignedInUser():User? = auth.currentUser?.run {
+        User(
             uuid = uid,
             name = displayName, //TODO: (DO THE FUNCTION TO SEPARATE @ FROM NAME)
             email = email,

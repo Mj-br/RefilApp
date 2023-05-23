@@ -10,8 +10,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -215,16 +213,15 @@ fun AppNavHost(
                 userDetailViewModel,
                 navController,
                 userData = googleAuthUiClient.getSignedInUser(),
-                onSignOut = {
-                    val scope = CoroutineScope(Dispatchers.Main)
-                    scope.launch {
-                        googleAuthUiClient.signOut()
-                        Toast.makeText(context, "Signed out", Toast.LENGTH_LONG).show()
+            ) {
+                val scope = CoroutineScope(Dispatchers.Main)
+                scope.launch {
+                    googleAuthUiClient.signOut()
+                    Toast.makeText(context, "Signed out", Toast.LENGTH_LONG).show()
 
-                        navController.popBackStack()
-                    }
-                },
-            )
+                    navController.popBackStack()
+                }
+            }
 
         }
 
