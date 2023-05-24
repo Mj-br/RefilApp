@@ -90,6 +90,9 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
 
+    //Lottie
+    implementation "com.airbnb.android:lottie-compose:4.2.0"
+
     //Material Theme 3
     implementation "androidx.compose.material3:material3:1.1.0"
 

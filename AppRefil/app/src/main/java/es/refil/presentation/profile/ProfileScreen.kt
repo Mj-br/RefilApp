@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
 import es.refil.R
 import es.refil.data.models.User
 import es.refil.navigation.Destinations
@@ -72,7 +71,9 @@ fun ProfileScreen(
                     CircleShape
                 )
                 .size(150.dp)
+
         )
+
 
         if (userData?.name != null) {
             Text(
@@ -92,7 +93,6 @@ fun ProfileScreen(
             )
 
         }
-
 
         Column(
             modifier = Modifier
@@ -125,6 +125,7 @@ fun ProfileScreen(
                     .fillMaxWidth()
                     .wrapContentHeight()
             ) {
+
                 Text(
                     text = stringResource(id = R.string.email),
                     style = MaterialTheme.typography.bodyLarge,
@@ -225,6 +226,7 @@ fun ProfileScreen(
             ) {
                 Text(text = stringResource(id = R.string.logout))
             }
+
         }
     }
 }
