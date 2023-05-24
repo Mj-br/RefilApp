@@ -21,7 +21,7 @@ import es.refil.presentation.auth.registration.GoogleAuthUiClient
 import es.refil.presentation.auth.registration.RegistrationScreen
 import es.refil.presentation.codeQR.QrScreen
 import es.refil.presentation.codeQR.QrViewModel
-import es.refil.presentation.components.AnimatedSplashScreen
+import es.refil.common.components.AnimatedSplashScreen
 import es.refil.presentation.profile.ProfileScreen
 import es.refil.presentation.profile.UserDetailViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -106,6 +106,7 @@ fun AppNavHost(
                     authViewModel.hideLoginErrorDialog()
                 },
                 state = authViewModel.loginState.value
+
 
             )
         }

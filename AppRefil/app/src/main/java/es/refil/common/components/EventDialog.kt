@@ -1,4 +1,4 @@
-package es.refil.presentation.components
+package es.refil.common.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background

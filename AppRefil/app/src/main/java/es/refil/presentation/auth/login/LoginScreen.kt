@@ -41,9 +41,10 @@ import es.refil.R
 import es.refil.data.Resource
 import es.refil.navigation.Destinations
 import es.refil.presentation.auth.AuthViewModel
-import es.refil.presentation.components.EventDialog
-import es.refil.presentation.components.RoundedButton
-import es.refil.presentation.components.TransparentTextField
+import es.refil.common.components.EventDialog
+import es.refil.common.components.RoundedButton
+import es.refil.common.components.TransparentTextField
+import kotlinx.coroutines.delay
 
 @Composable
 fun LoginScreen(
@@ -268,39 +269,30 @@ fun LoginScreen(
         loginFlow?.value?.let { resource ->
             when (resource) {
                 is Resource.Failure<*> -> {
+                    LaunchedEffect(Unit) {
+                        val exception = resource.exception
+                        viewModel.showErrorMessage(exception)
 
-
-                    /*LaunchedEffect(key1 = state.signInError ){
-
-                        Toast.makeText(
-                            context,
-                            R.string.error_login,
-                            Toast.LENGTH_LONG
-                        ).show()
-
-                    }*/
-
-                    //TODO: Implement login verification. PROBLEM: The toast is visualized repeatedly
-                    /*val exception = resource.exception
-                    viewModel.showErrorMessage(exception)
-
-                    val errorMessage = viewModel.loginState.value.signInError
-                    errorMessage?.let {
+                        val errorMessage = viewModel.loginState.value.signInError
                         Toast.makeText(
                             context,
                             errorMessage,
                             Toast.LENGTH_LONG
                         ).show()
                     }
-*/
-
 
                 }
                 Resource.Loading -> {
-                    ConstraintLayout(
+                    if (Resource.Loading == loginFlow.value){
+                        viewModel.showLoginButton()
+                    }
+
+                    /*ConstraintLayout(
                         modifier = Modifier.fillMaxSize()
                     ) {
                         val (refLoader) = createRefs()
+
+
                         CircularProgressIndicator(
                             modifier = Modifier.constrainAs(refLoader) {
                                 top.linkTo(parent.top)
@@ -310,7 +302,7 @@ fun LoginScreen(
                             }
 
                         )
-                    }
+                    }*/
                 }
 
                 is Resource.Success -> {

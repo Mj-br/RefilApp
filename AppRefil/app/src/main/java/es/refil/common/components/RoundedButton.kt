@@ -1,4 +1,4 @@
-package es.refil.presentation.components
+package es.refil.common.components
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width

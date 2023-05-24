@@ -1,4 +1,4 @@
-package es.refil.presentation.components
+package es.refil.common.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween

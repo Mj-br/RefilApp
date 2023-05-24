@@ -34,9 +34,6 @@ class AuthViewModel @Inject constructor(
     val loginState: MutableState<LoginStateData> = mutableStateOf(LoginStateData())
     val registerState: MutableState<RegisterStateData> = mutableStateOf(RegisterStateData())
 
-    private val _state: MutableStateFlow<RegisterStateData> = MutableStateFlow(RegisterStateData())
-    val state: StateFlow<RegisterStateData> = _state.asStateFlow()
-
     private val _loginFlow = MutableStateFlow<Resource<FirebaseUser>?>(null)
     val loginFlow: StateFlow<Resource<FirebaseUser>?> = _loginFlow
 
@@ -93,13 +90,14 @@ class AuthViewModel @Inject constructor(
 
             loginState.value = loginState.value.copy(displayProgressBar = true)
 
-            delay(3000)
+            delay(0)
 
             loginState.value = loginState.value.copy(email = email, password = password)
             loginState.value = loginState.value.copy(displayProgressBar = false)
             loginState.value = loginState.value.copy(successLogin = true)
 
             _loginFlow.value = Resource.Loading
+            delay(1000)
             val result = authRepository.login(email, password)
             _loginFlow.value = result
 
@@ -148,6 +146,7 @@ class AuthViewModel @Inject constructor(
     }
 
     // Show button logic
+    fun showLoginButton() = loginState.value.displayProgressBar && loginState.value.successLogin
     //fun enableLogin(email: String, password: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length >= 6
 
     private fun inputLoginError(email: String, password: String) =

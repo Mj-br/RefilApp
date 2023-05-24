@@ -21,7 +21,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import es.refil.R
 import es.refil.navigation.Destinations
-import es.refil.presentation.components.CreateQrCode
+import es.refil.common.components.CreateQrCode
 import es.refil.ui.theme.AppRefilTheme
 import es.refil.ui.theme.spacing
 

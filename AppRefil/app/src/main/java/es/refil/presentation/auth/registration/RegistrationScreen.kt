@@ -15,7 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import es.refil.presentation.components.TransparentTextField
+import es.refil.common.components.TransparentTextField
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
@@ -36,9 +36,9 @@ import es.refil.R
 import es.refil.data.Resource
 import es.refil.navigation.Destinations
 import es.refil.presentation.auth.AuthViewModel
-import es.refil.presentation.components.EventDialog
-import es.refil.presentation.components.RoundedButton
-import es.refil.presentation.components.SocialMediaButton
+import es.refil.common.components.EventDialog
+import es.refil.common.components.RoundedButton
+import es.refil.common.components.SocialMediaButton
 import es.refil.ui.theme.GMAILCOLOR
 
 @Composable

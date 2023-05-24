@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import es.refil.data.models.BottomNavItem
-import es.refil.presentation.components.BottomNavigationBar
+import es.refil.common.components.BottomNavigationBar
 
 
 @OptIn(ExperimentalAnimationApi::class)
