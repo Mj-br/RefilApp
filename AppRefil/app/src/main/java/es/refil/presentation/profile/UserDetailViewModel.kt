@@ -61,8 +61,6 @@ suspend fun getDatafromFirestore(): User {
         db.collection("users").get().await().map {
             val result = it.toObject(User::class.java)
             user = result
-
-
         }
 
     } catch (e: FirebaseFirestoreException) {
