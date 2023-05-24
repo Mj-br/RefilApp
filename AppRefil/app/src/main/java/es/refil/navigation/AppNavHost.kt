@@ -21,6 +21,7 @@ import es.refil.presentation.auth.registration.GoogleAuthUiClient
 import es.refil.presentation.auth.registration.RegistrationScreen
 import es.refil.presentation.codeQR.QrScreen
 import es.refil.presentation.codeQR.QrViewModel
+import es.refil.presentation.components.AnimatedSplashScreen
 import es.refil.presentation.profile.ProfileScreen
 import es.refil.presentation.profile.UserDetailViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -34,7 +35,7 @@ fun AppNavHost(
     authViewModel: AuthViewModel, qrViewModel: QrViewModel?, userDetailViewModel: UserDetailViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberAnimatedNavController(),
-    startDestination: String = Destinations.Login.route
+    startDestination: String = Destinations.SplashScreen.route
 ) {
 
     val context = LocalContext.current
@@ -52,6 +53,12 @@ fun AppNavHost(
         navController = navController,
         startDestination = startDestination
     ) {
+
+        composable(
+            route = Destinations.SplashScreen.route
+        ){
+            AnimatedSplashScreen(navController = navController)
+        }
 
 
         composable(

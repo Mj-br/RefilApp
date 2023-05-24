@@ -319,7 +319,6 @@ fun RegistrationScreen(
                             Toast.LENGTH_LONG
                         ).show()
 
-                        //TODO: ChANGE THIS TO NAVIGATE TO MARKET SCREEN
                         popUpTo(Destinations.Profile.route) { inclusive = true }
                     }
                 }
