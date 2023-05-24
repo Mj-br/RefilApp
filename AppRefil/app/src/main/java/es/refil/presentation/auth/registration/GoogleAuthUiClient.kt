@@ -7,7 +7,9 @@ import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import es.refil.R
 import es.refil.data.models.SignInResult
 import es.refil.data.models.User
@@ -53,6 +55,7 @@ class GoogleAuthUiClient @Inject constructor(
         val googleCredentials = GoogleAuthProvider.getCredential(googleIdToken, null)
         return try {
             val user = auth.signInWithCredential(googleCredentials).await().user
+            createFirestoreTable(user)
             SignInResult(
                 data = user?.run {
 
@@ -118,4 +121,21 @@ class GoogleAuthUiClient @Inject constructor(
             .setAutoSelectEnabled(true)
             .build()
     }
+}
+
+private fun createFirestoreTable(user: FirebaseUser?) {
+    // Aquí debes implementar la lógica para crear la tabla en Firestore utilizando los datos del usuario
+    // Puedes acceder a los datos del usuario como user.uid, user.email, etc.
+    // Ejemplo:
+    val firestore = FirebaseFirestore.getInstance()
+    val newUserDocRef = firestore.collection("users").document(user?.uid!!)
+    val userData = hashMapOf(
+        "uid" to user.uid,
+        "email" to user.email,
+        "name" to user.displayName,
+        "points" to 0,
+        "bottles" to 0,
+        "favorites" to emptyList<String>()
+    )
+    newUserDocRef.set(userData)
 }

@@ -1,10 +1,12 @@
 package es.refil.data.network.auth
 
+import android.content.Intent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import es.refil.data.Resource
 import es.refil.data.models.User
+import es.refil.presentation.auth.registration.GoogleAuthUiClient
 import es.refil.repositories.UserRepository
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -12,8 +14,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val userRepository: UserRepository,
-    //The oneTapClient show us the dialog to sign in
+    private val userRepository: UserRepository
 ) : AuthRepository {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -55,8 +56,7 @@ class AuthRepositoryImpl @Inject constructor(
 
 
     }
-
-    private fun createNewFireStoreUser(user: FirebaseUser?) {
+        private fun createNewFireStoreUser(user: FirebaseUser?) {
         val newUser = User(
             uid = user?.uid ?: "",
             email = user?.email,
@@ -64,7 +64,6 @@ class AuthRepositoryImpl @Inject constructor(
             points = 0,
             bottles = 0,
             favorites = emptyList()
-
         )
         userRepository.addNewUser(newUser)
     }
@@ -73,6 +72,16 @@ class AuthRepositoryImpl @Inject constructor(
     override fun logout() {
         firebaseAuth.signOut()
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
