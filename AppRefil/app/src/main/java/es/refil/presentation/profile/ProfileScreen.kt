@@ -78,7 +78,7 @@ fun ProfileScreen(
 
         )
 
-        Spacer(modifier = Modifier.size(20.dp))
+        Spacer(modifier = Modifier.size(50.dp))
 
         if (userData?.name != null) {
             Text(
@@ -101,7 +101,7 @@ fun ProfileScreen(
 
         Spacer(modifier = Modifier.padding(25.dp))
 
-        Column(modifier = Modifier.fillMaxWidth()
+        /*Column(modifier = Modifier.fillMaxWidth()
             .wrapContentHeight()
             .padding(spacing.medium)
         ) {
@@ -176,12 +176,12 @@ fun ProfileScreen(
                         modifier = Modifier.weight(0.3f),
                         color = MaterialTheme.colorScheme.onSurface
                     )
-                }
+                }*/
 
                 Button(
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
-                        .padding(top = spacing.extraLarge),
+                        .padding(top = spacing.medium),
                     //enabled = enabledButton() == true,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF2196F3),
@@ -216,7 +216,7 @@ fun ProfileScreen(
                     },
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
-                        .padding(top = spacing.large),
+                        .padding(top = spacing.extraLarge),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF2196F3)
                     )
@@ -229,8 +229,8 @@ fun ProfileScreen(
         }
 
 
-    }
-}
+
+
 
 /*@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
