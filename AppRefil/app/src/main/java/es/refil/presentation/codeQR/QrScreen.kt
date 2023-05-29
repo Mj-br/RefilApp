@@ -1,8 +1,6 @@
 package es.refil.presentation.codeQR
 
 import android.content.res.Configuration
-import android.media.Image
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -23,12 +21,14 @@ import androidx.navigation.compose.rememberNavController
 import es.refil.R
 import es.refil.navigation.Destinations
 import es.refil.common.components.CreateQrCode
+import es.refil.data.network.auth.AuthRepositoryImpl
+import es.refil.presentation.auth.AuthViewModel
 import es.refil.ui.theme.AppRefilTheme
 import es.refil.ui.theme.spacing
 
 
 @Composable
-fun QrScreen(viewModel: QrViewModel?, navController: NavHostController) {
+fun QrScreen(viewModel: AuthViewModel?, navController: NavHostController) {
     val spacing = MaterialTheme.spacing
 
     Column(

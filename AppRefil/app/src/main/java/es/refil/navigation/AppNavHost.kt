@@ -20,7 +20,6 @@ import es.refil.presentation.auth.login.LoginScreen
 import es.refil.presentation.auth.registration.GoogleAuthUiClient
 import es.refil.presentation.auth.registration.RegistrationScreen
 import es.refil.presentation.codeQR.QrScreen
-import es.refil.presentation.codeQR.QrViewModel
 import es.refil.common.components.AnimatedSplashScreen
 import es.refil.presentation.profile.ProfileScreen
 import es.refil.presentation.profile.UserDetailViewModel
@@ -32,7 +31,7 @@ import kotlinx.coroutines.launch
 @ExperimentalAnimationApi
 @Composable
 fun AppNavHost(
-    authViewModel: AuthViewModel, qrViewModel: QrViewModel?, userDetailViewModel: UserDetailViewModel,
+    authViewModel: AuthViewModel, userDetailViewModel: UserDetailViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberAnimatedNavController(),
     startDestination: String = Destinations.SplashScreen.route
@@ -237,7 +236,7 @@ fun AppNavHost(
             route = Destinations.QrScreen.route,
             arguments = Destinations.QrScreen.arguments
         ){
-            QrScreen(qrViewModel, navController)
+            QrScreen(authViewModel, navController)
         }
 
 

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import dagger.hilt.android.AndroidEntryPoint
 import es.refil.navigation.AppNavHost
 import es.refil.presentation.auth.AuthViewModel
-import es.refil.presentation.codeQR.QrViewModel
 import es.refil.presentation.mainMarket.MainMarketViewModel
 import es.refil.presentation.profile.UserDetailViewModel
 import es.refil.ui.theme.AppRefilTheme
@@ -22,7 +21,6 @@ class MainActivity : ComponentActivity() {
     private val mainMarketViewModel: MainMarketViewModel by viewModels()
 
     private val viewModel by viewModels<AuthViewModel>()
-    private val qrViewModel by viewModels<QrViewModel>()
     private val userViewModel by viewModels<UserDetailViewModel>()
 
 
@@ -33,7 +31,7 @@ class MainActivity : ComponentActivity() {
             AppRefilTheme {
                         BoxWithConstraints {
 
-                            AppNavHost(viewModel, qrViewModel, userViewModel)
+                            AppNavHost(viewModel, userViewModel)
 
                         }
             }
