@@ -69,7 +69,7 @@ suspend fun getDatafromFirestore(): User {
 
 //TODO: (ERROR) NO FUNCIONA
 //Get data from firestore in live NOT FUNCTION
-suspend fun getDatafromFirestoreLive(): User {
+suspend fun getDatafromFirestoreLive(uid: String): User {
     val db = FirebaseFirestore.getInstance()
     var user = User()
     val uuid = Firebase.auth.currentUser?.uid

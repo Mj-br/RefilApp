@@ -197,7 +197,7 @@ fun LoginScreen(
 
                                 RoundedButton(
                                     text = "Login",
-                                    //enabledButton = { viewModel?.enableLogin(emailValue.value, passwordValue.value) },
+                                    //Disabled button if resource is loading
                                     displayProgressBar = loginFlow?.value == Resource.Loading
                                 ) {
                                     viewModel?.login(emailValue.value, passwordValue.value)
