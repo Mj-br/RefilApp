@@ -7,7 +7,7 @@ import es.refil.data.Resource
 
 interface QrRepository {
     val currentUser: FirebaseUser?
-//    suspend fun generateQrCode(uuid: String): BitMatrix?
+
 
 
 }

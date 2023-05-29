@@ -17,8 +17,6 @@ import es.refil.data.network.auth.AuthRepositoryImpl
 import es.refil.presentation.auth.login.LoginStateData
 import es.refil.presentation.auth.registration.RegisterStateData
 import es.refil.data.models.SignInResult
-import es.refil.data.models.User
-import es.refil.repositories.UserRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,7 +26,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepositoryImpl,
-    private val userRepository: UserRepository
 ) : ViewModel() {
 
     val loginState: MutableState<LoginStateData> = mutableStateOf(LoginStateData())
@@ -44,9 +41,6 @@ class AuthViewModel @Inject constructor(
         get() = authRepository.currentUser
 
     //region Google SigIn
-
-    private val _logState = MutableStateFlow(LoginStateData())
-    val logState = _logState.asStateFlow()
 
     private val _signInState = MutableStateFlow(RegisterStateData())
     val signInState = _signInState.asStateFlow()

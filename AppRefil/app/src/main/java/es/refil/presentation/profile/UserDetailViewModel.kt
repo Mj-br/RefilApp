@@ -7,13 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import es.refil.data.models.User
 import es.refil.data.network.auth.AuthRepositoryImpl
 import es.refil.data.network.await
-import es.refil.repositories.UserRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +23,6 @@ import javax.inject.Inject
 @HiltViewModel
 class UserDetailViewModel
 @Inject constructor(
-    private val userRepository: UserRepository,
     private val authRepository: AuthRepositoryImpl
 
 ):ViewModel() {

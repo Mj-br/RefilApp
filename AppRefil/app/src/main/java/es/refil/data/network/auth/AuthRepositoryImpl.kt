@@ -3,22 +3,22 @@ package es.refil.data.network.auth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.CollectionReference
 import es.refil.data.Resource
 import es.refil.data.models.User
-import es.refil.repositories.UserRepository
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val userRepository: UserRepository
+    private val userList: CollectionReference
 ) : AuthRepository {
-
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser
+
+
 
     override suspend fun login(email: String, password: String): Resource<FirebaseUser> {
         return try {
@@ -63,7 +63,17 @@ class AuthRepositoryImpl @Inject constructor(
             bottles = 0,
             favorites = emptyList()
         )
-        userRepository.addNewUser(newUser)
+       addNewUser(newUser)
+    }
+
+    fun addNewUser(user: User){
+        try {
+            userList.document(user.uid).set(user)
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+        }
+
     }
 
 

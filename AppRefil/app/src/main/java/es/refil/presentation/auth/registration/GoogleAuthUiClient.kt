@@ -14,7 +14,6 @@ import es.refil.R
 import es.refil.data.models.SignInResult
 import es.refil.data.models.User
 import es.refil.data.network.await
-import es.refil.repositories.UserRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -49,7 +48,7 @@ class GoogleAuthUiClient @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    suspend fun signInWithIntent(intent: Intent): SignInResult{
+    suspend fun signInWithIntent(intent: Intent): SignInResult {
         val credential = oneTapClient.getSignInCredentialFromIntent(intent)
         val googleIdToken = credential.googleIdToken
         val googleCredentials = GoogleAuthProvider.getCredential(googleIdToken, null)
@@ -98,7 +97,7 @@ class GoogleAuthUiClient @Inject constructor(
         }
     }
 
-    fun getSignedInUser():User? = auth.currentUser?.run {
+    fun getSignedInUser(): User? = auth.currentUser?.run {
         User(
             uid = uid,
             name = displayName, //TODO: (DO THE FUNCTION TO SEPARATE @ FROM NAME)

@@ -16,18 +16,5 @@ class QrRepositoryImpl @Inject constructor(
     override val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser
 
-    /*override suspend fun generateQrCode(uuid: String): BitMatrix? {
-        val hints = EnumMap<EncodeHintType, Any>(EncodeHintType::class.java)
-        hints[EncodeHintType.CHARACTER_SET] = "UTF-8"
-        hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.L
-
-        val writer = MultiFormatWriter()
-        try {
-            return writer.encode(firebaseAuth.currentUser?.uid, BarcodeFormat.QR_CODE, 512, 512, hints)
-        } catch (e: WriterException) {
-            e.printStackTrace()
-        }
-        return null
-    }*/
 }
 
