@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import es.refil.R
@@ -54,7 +55,9 @@ fun QrScreen(viewModel: QrViewModel?, navController: NavHostController) {
 
 
         Box(
-            modifier = Modifier.fillMaxWidth().weight(0.2f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.2f),
             contentAlignment = Alignment.Center
         ) {
             CreateQrCode(uuid = viewModel?.currentUser?.uid ?: "")
@@ -67,12 +70,13 @@ fun QrScreen(viewModel: QrViewModel?, navController: NavHostController) {
                 .wrapContentHeight()
                 .padding(spacing.medium)
         ) {
+            Spacer(modifier = Modifier.padding(20.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
             ) {
-                Text(
+                /*Text(
                     text = stringResource(id = R.string.name),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.weight(0.3f),
@@ -84,10 +88,10 @@ fun QrScreen(viewModel: QrViewModel?, navController: NavHostController) {
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.weight(0.7f),
                     color = MaterialTheme.colorScheme.onSurface
-                )
+                )*/
             }
 
-            Row(
+            /*Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -105,7 +109,7 @@ fun QrScreen(viewModel: QrViewModel?, navController: NavHostController) {
                     modifier = Modifier.weight(0.7f),
                     color = MaterialTheme.colorScheme.onSurface
                 )
-            }
+            }*/
 
             Button(
                 modifier = Modifier
