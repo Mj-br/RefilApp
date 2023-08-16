@@ -8,14 +8,23 @@ sealed class Destinations(
     val route: String,
     val arguments: List<NamedNavArgument>
 ){
-    object Login: Destinations("login", emptyList())
-    object Register: Destinations("register", emptyList())
+    object Login: Destinations("LoginScreen", emptyList())
+    object Register: Destinations("RegistrationScreen", emptyList())
     object Profile: Destinations(
-        "profile",
-        listOf(
+        "ProfileScreen",
+        emptyList()
+        /*listOf(
             navArgument("email"){type = NavType.StringType},
             navArgument("password"){type = NavType.StringType}
 
-        )
+        )*/
     )
+
+    object SplashScreen: Destinations("SplashScreen", emptyList())
+
+    object QrScreen: Destinations("QrScreen", emptyList())
+    object MainMarket: Destinations("MainMarketScreen", emptyList())
+    object Favorites: Destinations("FavoriteScreen", emptyList())
+    object DetailProduct: Destinations("DetailProductScreen", emptyList())
+
 }

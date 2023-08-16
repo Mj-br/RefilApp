@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">AppRefill</string>
+    <string name="web_client_id">128121858942-or7evmfoh25q4mt6gghsdsu5nis6j2mj.apps.googleusercontent.com</string>
+
 
     <!-- https://github.com/LeonardoMorales/Login-JetpackCompose/blob/02-LoginUI/app/src/main/res/values/strings.xml -->
     <string name="error_input_empty">The fields must not be empty</string>
@@ -7,9 +9,21 @@
     <string name="error_not_a_valid_phone_number">Please enter a valid phone number</string>
     <string name="error_incorrectly_repeated_password">The passwords do not match</string>
     <string name="error_invalid_credentials">Email or password incorrect</string>
+    <string name="error_password_too_short">Password too short</string>
     <string name="success_registration">Successfully registered new user</string>
     <string name="success_login">Successfully logged in</string>
+    <string name="error_login">User do not exist</string>
     <string name="error_unknown">An unknown error occurred</string>
+    <string name="email">Email</string>
+    <string name="points">Points</string>
+    <string name="password">password</string>
+    <string name="login">login</string>
+    <string name="name">Name</string>
+    <string name="signup">signup</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="empty" />
+    <string name="logout">Sign out</string>
+    <string name="error_sign_up">User already exist</string>
 
 
 
